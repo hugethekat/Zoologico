@@ -20,7 +20,7 @@ public class ConexionDB {
 
     }
 
-    public MongoDatabase obtenerInstancia() {
+    public static MongoDatabase obtenerInstancia() {
 
         if (conexionDB == null) {
             MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
