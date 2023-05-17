@@ -20,16 +20,8 @@ public class Habitat {
     private List<Continente> continentes;
     private List<ObjectId> especies;
 
-    private static Habitat instancia;
-
-    public static Habitat getInstancia() {
-        if (instancia == null) {
-            instancia = new Habitat();
-        }
-        return instancia;
-    }
-
-    private Habitat() {
+   
+    public Habitat() {
     }
 
     public ObjectId getId() {

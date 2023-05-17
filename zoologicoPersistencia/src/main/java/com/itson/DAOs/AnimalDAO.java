@@ -22,9 +22,20 @@ import org.bson.types.ObjectId;
  */
 public class AnimalDAO implements iAnimal {
     
+        private static AnimalDAO instancia;
+
+
+    public static AnimalDAO getInstancia() {
+        if (instancia == null) {
+            instancia = new AnimalDAO();
+        }
+        return instancia;
+    }
+    
+    
 
   //  @Override
-    public Animal createAnimal(String nombre, int edad, Sexo sexo) {
+    private Animal createAnimal(String nombre, int edad, Sexo sexo) {
 
         Animal animal = new Animal();
         animal.setEdad(edad);
@@ -40,7 +51,7 @@ public class AnimalDAO implements iAnimal {
 
         Document animalDoc = new Document("Nombre", animal.getNombre())
                 .append("Edad", animal.getEdad())
-                .append("Sexo", animal.getSexo());
+                .append("Sexo", animal.getSexo().toString());
 
         ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getAnimales()).insertOne(animalDoc);
     }
@@ -50,7 +61,7 @@ public class AnimalDAO implements iAnimal {
 
         Document animalDoc = new Document("Nombre", animal.getNombre())
                 .append("Edad", animal.getEdad())
-                .append("Sexo", animal.getSexo());
+                .append("Sexo", animal.getSexo().toString());
 
         ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getAnimales()).deleteOne(animalDoc);
 

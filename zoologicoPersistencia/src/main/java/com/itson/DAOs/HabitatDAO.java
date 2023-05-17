@@ -12,7 +12,7 @@ import com.itson.dominio.Habitat;
 import com.itson.dominio.Vegetacion;
 import com.itson.utils.FormatoColecciones;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoCursor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -54,7 +54,7 @@ public class HabitatDAO implements iHabitat {
             List<ObjectId> especies = new ArrayList<>();
 
             if (documentoEncontrado != null) {
-                Habitat habitat = Habitat.getInstancia();
+                Habitat habitat = new Habitat();
                 habitat.setNombre(documentoEncontrado.getString("Nombre"));
 
                 // Obtener lista de Climas
@@ -132,18 +132,83 @@ public class HabitatDAO implements iHabitat {
 
     @Override
     public void guardarHabitat(Habitat habitat) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        List<Document> climaDocs = new ArrayList<>();
+        for (Clima clima : habitat.getClimas()) {
+            Document climaDoc = new Document("Nombre", clima.getNombre())
+                    .append("Descripcion", clima.getDescripcion());
+            climaDocs.add(climaDoc);
+        }
+        
+         List<Document> vegetacionesDoc = new ArrayList<>();
+        for (Vegetacion vegetacion : habitat.getVegetaciones()) {
+            Document vegetacionDoc = new Document("Nombre", vegetacion.getNombre());
+            vegetacionesDoc.add(vegetacionDoc);
+        }
+        
+        List<Document> ContinentesDoc = new ArrayList<>();
+        for (Continente continente : habitat.getContinentes()) {
+            Document continenteDoc = new Document("Continente", continente.toString());
+            ContinentesDoc.add(continenteDoc);
+        }
+        
+        Document habitatDoc = new Document("Nombre", habitat.getNombre())
+                .append("Climas", climaDocs)
+                .append("Continentes", ContinentesDoc)
+                .append("Especies", habitat.getEspecies())
+                .append("Vegetacion", vegetacionesDoc);
+
+        ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getHabitats()).insertOne(habitatDoc);
+        
     }
 
     @Override
-    public void eliminarHabitat(Habitat habitat
-    ) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void eliminarHabitat(Habitat habitat) {
+
+ List<Document> climaDocs = new ArrayList<>();
+        for (Clima clima : habitat.getClimas()) {
+            Document climaDoc = new Document("Nombre", clima.getNombre())
+                    .append("Descripcion", clima.getDescripcion());
+            climaDocs.add(climaDoc);
+        }
+        
+         List<Document> vegetacionesDoc = new ArrayList<>();
+        for (Vegetacion vegetacion : habitat.getVegetaciones()) {
+            Document vegetacionDoc = new Document("Nombre", vegetacion.getNombre());
+            vegetacionesDoc.add(vegetacionDoc);
+        }
+        
+        List<Document> ContinentesDoc = new ArrayList<>();
+        for (Continente continente : habitat.getContinentes()) {
+            Document continenteDoc = new Document("Continente", continente.toString());
+            ContinentesDoc.add(continenteDoc);
+        }
+        
+        Document habitatDoc = new Document("Nombre", habitat.getNombre())
+                .append("Climas", climaDocs)
+                .append("Continentes", ContinentesDoc)
+                .append("Especies", habitat.getEspecies())
+                .append("Vegetacion", vegetacionesDoc);
+        
+        ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getHabitats()).deleteOne(habitatDoc);
+
     }
 
     @Override
     public List<Habitat> consultarHabitat() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
+        List<Habitat> listaAnimales = new ArrayList();
+
+        MongoCursor<Document> habitatDoc = ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getAnimales()).find().iterator();
+
+        while (habitatDoc.hasNext()) {
+            Document document = habitatDoc.next();
+            String nombre = document.getString("Nombre");
+
+           
+        }
+        return listaAnimales;
+
+    }
+   
 }
