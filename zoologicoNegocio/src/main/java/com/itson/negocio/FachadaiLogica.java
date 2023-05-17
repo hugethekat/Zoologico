@@ -5,6 +5,7 @@
 package com.itson.negocio;
 
 import com.itson.Interfaces.iLogica;
+import com.itson.dominio.Habitat;
 import java.util.List;
 
 /**
@@ -38,5 +39,7 @@ public class FachadaiLogica {
         Object bh = iLog.verificarExistencia(nom);
         return bh;
     }
+
+  
 
 }

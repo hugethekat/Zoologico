@@ -4,11 +4,22 @@
  */
 package com.itson.GUI;
 
+import com.itson.DAOs.HabitatDAO;
+import com.itson.dominio.Clima;
+import com.itson.dominio.Continente;
+import com.itson.dominio.Habitat;
+import com.itson.dominio.Vegetacion;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Erick
  */
 public class frmRegistrarHabitat extends javax.swing.JFrame {
+
+    Habitat habitat = new Habitat();
 
     private static frmRegistrarHabitat registrarHabitad;
 
@@ -22,7 +33,21 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
     }
 
     private frmRegistrarHabitat() {
+
+        DefaultListModel<Continente> model = new DefaultListModel<>();
+        model = new DefaultListModel<>();
+
+        model.addElement(Continente.AFRICA);
+        model.addElement(Continente.ASIA);
+        model.addElement(Continente.AMERICA);
+        model.addElement(Continente.ANTARTIDA);
+        model.addElement(Continente.EUROPA);
+        model.addElement(Continente.OCEANIA);
+
         initComponents();
+
+        listaContinentesSistema.setModel(model);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -62,11 +87,11 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
         btnEliminarVegetacion = new javax.swing.JButton();
         btnEliminarClima = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        txtFieldNombreHabitat1 = new javax.swing.JTextField();
+        txtFielDescripcion = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        txtFieldNombreHabitat2 = new javax.swing.JTextField();
+        txtFieldClima = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        txtFieldNombreHabitat4 = new javax.swing.JTextField();
+        txtFieldVegetacion = new javax.swing.JTextField();
         btnRegresar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
 
@@ -89,19 +114,14 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
         txtFieldNombreHabitat.setFont(new java.awt.Font("Roboto Light", 0, 12)); // NOI18N
 
         btnVerificar.setText("Verificar");
-
-        listaContinentesSistema.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        btnVerificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerificarActionPerformed(evt);
+            }
         });
+
         jScrollPane2.setViewportView(listaContinentesSistema);
 
-        listaVegetacionSistema.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane3.setViewportView(listaVegetacionSistema);
 
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
@@ -125,72 +145,77 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel11.setText("Continentes");
 
-        listaVegetacionHabitat.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane4.setViewportView(listaVegetacionHabitat);
 
-        listaClimasSistema.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane5.setViewportView(listaClimasSistema);
 
-        listaClimasHabitat.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane6.setViewportView(listaClimasHabitat);
 
-        listaContinentesHabitat.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane8.setViewportView(listaContinentesHabitat);
 
         btnAgregarContinente.setText("Agregar");
         btnAgregarContinente.setEnabled(false);
+        btnAgregarContinente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarContinenteActionPerformed(evt);
+            }
+        });
 
         btnAgregarClima.setText("Agregar");
         btnAgregarClima.setEnabled(false);
+        btnAgregarClima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarClimaActionPerformed(evt);
+            }
+        });
 
         btnAgregarVegetacion.setText("Agregar");
         btnAgregarVegetacion.setEnabled(false);
+        btnAgregarVegetacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarVegetacionActionPerformed(evt);
+            }
+        });
 
         btnEliminarContinente.setText("Eliminar");
         btnEliminarContinente.setEnabled(false);
+        btnEliminarContinente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarContinenteActionPerformed(evt);
+            }
+        });
 
         btnEliminarVegetacion.setText("Eliminar");
         btnEliminarVegetacion.setEnabled(false);
 
         btnEliminarClima.setText("Eliminar");
         btnEliminarClima.setEnabled(false);
+        btnEliminarClima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarClimaActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel3.setText("Nuevo clima:");
 
-        txtFieldNombreHabitat1.setEditable(false);
-        txtFieldNombreHabitat1.setFont(new java.awt.Font("Roboto Light", 0, 12)); // NOI18N
+        txtFielDescripcion.setEditable(false);
+        txtFielDescripcion.setFont(new java.awt.Font("Roboto Light", 0, 12)); // NOI18N
 
         jLabel13.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel13.setText("Descripción clima:");
 
-        txtFieldNombreHabitat2.setEditable(false);
-        txtFieldNombreHabitat2.setFont(new java.awt.Font("Roboto Light", 0, 12)); // NOI18N
+        txtFieldClima.setEditable(false);
+        txtFieldClima.setFont(new java.awt.Font("Roboto Light", 0, 12)); // NOI18N
 
         jLabel14.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel14.setText("Nueva vegetación:");
 
-        txtFieldNombreHabitat4.setEditable(false);
-        txtFieldNombreHabitat4.setFont(new java.awt.Font("Roboto Light", 0, 12)); // NOI18N
-        txtFieldNombreHabitat4.addActionListener(new java.awt.event.ActionListener() {
+        txtFieldVegetacion.setEditable(false);
+        txtFieldVegetacion.setFont(new java.awt.Font("Roboto Light", 0, 12)); // NOI18N
+        txtFieldVegetacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFieldNombreHabitat4ActionPerformed(evt);
+                txtFieldVegetacionActionPerformed(evt);
             }
         });
 
@@ -203,6 +228,11 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
 
         btnGuardar.setText("Guardar");
         btnGuardar.setEnabled(false);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -219,9 +249,9 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel13)
                     .addComponent(jLabel14)
-                    .addComponent(txtFieldNombreHabitat2)
-                    .addComponent(txtFieldNombreHabitat1)
-                    .addComponent(txtFieldNombreHabitat4)
+                    .addComponent(txtFieldClima)
+                    .addComponent(txtFielDescripcion)
+                    .addComponent(txtFieldVegetacion)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel7)
@@ -303,15 +333,15 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFieldNombreHabitat2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtFieldClima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFieldNombreHabitat1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtFielDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel14)
                                 .addGap(18, 18, Short.MAX_VALUE)
-                                .addComponent(txtFieldNombreHabitat4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtFieldVegetacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(29, 29, 29)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel7)
@@ -328,14 +358,15 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEliminarContinente)
-                            .addComponent(btnEliminarVegetacion)
-                            .addComponent(btnEliminarClima)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAgregarClima)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnAgregarContinente)
-                                .addComponent(btnAgregarClima)
-                                .addComponent(btnAgregarVegetacion)))
+                                .addComponent(btnAgregarVegetacion))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnEliminarContinente)
+                                .addComponent(btnEliminarVegetacion)
+                                .addComponent(btnEliminarClima)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnRegresar)
@@ -359,9 +390,9 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtFieldNombreHabitat4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldNombreHabitat4ActionPerformed
+    private void txtFieldVegetacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldVegetacionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtFieldNombreHabitat4ActionPerformed
+    }//GEN-LAST:event_txtFieldVegetacionActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
 
@@ -369,6 +400,109 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarActionPerformed
+
+        btnEliminarClima.setEnabled(true);
+        btnEliminarContinente.setEnabled(true);
+        btnEliminarVegetacion.setEnabled(true);
+
+        btnAgregarClima.setEnabled(true);
+        btnAgregarContinente.setEnabled(true);
+        btnAgregarVegetacion.setEnabled(true);
+
+        txtFieldClima.setEditable(true);
+        txtFielDescripcion.setEditable(true);
+        txtFieldVegetacion.setEditable(true);
+
+        btnGuardar.setEnabled(true);
+
+    }//GEN-LAST:event_btnVerificarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+
+        List<Clima> climas = new ArrayList();
+        if (listaClimasHabitat.getModel().getSize() > 0) {
+
+            for (int i = 0; i < listaClimasHabitat.getModel().getSize(); i++) {
+                Clima clima = new Clima();
+                clima.setNombre(listaClimasHabitat.getModel().getElementAt(i));
+                climas.add(clima);
+            }
+        }
+
+        Clima clima = new Clima();
+        clima.setNombre(txtFieldClima.getText());
+        clima.setDescripcion(txtFielDescripcion.getText());
+
+        climas.add(clima);
+
+        List<Vegetacion> vegetaciones = new ArrayList();
+        if (listaVegetacionHabitat.getModel().getSize() >= 1) {
+            for (int i = 0; i < listaVegetacionHabitat.getModel().getSize(); i++) {
+                Vegetacion vegetacion = new Vegetacion();
+                vegetacion.setNombre(listaVegetacionHabitat.getModel().getElementAt(i));
+                vegetaciones.add(vegetacion);
+            }
+        }
+
+        Vegetacion vegetacion = new Vegetacion();
+        vegetacion.setNombre(txtFieldVegetacion.getText());
+
+        vegetaciones.add(vegetacion);
+
+        List<Continente> Continentes = new ArrayList();
+        for (int i = 0; i < listaContinentesHabitat.getModel().getSize(); i++) {
+            Continentes.add(listaContinentesHabitat.getModel().getElementAt(i));
+        }
+
+        habitat.setClimas(climas);
+        habitat.setContinentes(Continentes);
+        habitat.setNombre(txtFieldNombreHabitat.getText());
+        habitat.setVegetaciones(vegetaciones);
+
+        HabitatDAO.getInstancia().guardarHabitat(habitat);
+
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnAgregarClimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarClimaActionPerformed
+
+        DefaultListModel<String> model1 = new DefaultListModel<>();
+
+        model1.addElement(listaClimasSistema.getSelectedValue());
+
+        listaClimasHabitat.setModel(model1);
+
+    }//GEN-LAST:event_btnAgregarClimaActionPerformed
+
+    private void btnAgregarVegetacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVegetacionActionPerformed
+
+        DefaultListModel<String> model1 = new DefaultListModel<>();
+
+        model1.addElement(listaVegetacionSistema.getSelectedValue());
+
+        listaVegetacionHabitat.setModel(model1);
+
+    }//GEN-LAST:event_btnAgregarVegetacionActionPerformed
+
+    private void btnAgregarContinenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarContinenteActionPerformed
+
+        DefaultListModel<Continente> model1 = new DefaultListModel<>();
+
+        model1.addElement(listaContinentesSistema.getSelectedValue());
+
+        listaContinentesHabitat.setModel(model1);
+
+    }//GEN-LAST:event_btnAgregarContinenteActionPerformed
+
+    private void btnEliminarClimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarClimaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarClimaActionPerformed
+
+    private void btnEliminarContinenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarContinenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarContinenteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -404,13 +538,13 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JList<String> listaClimasHabitat;
     private javax.swing.JList<String> listaClimasSistema;
-    private javax.swing.JList<String> listaContinentesHabitat;
-    private javax.swing.JList<String> listaContinentesSistema;
+    private javax.swing.JList<Continente> listaContinentesHabitat;
+    private javax.swing.JList<Continente> listaContinentesSistema;
     private javax.swing.JList<String> listaVegetacionHabitat;
     private javax.swing.JList<String> listaVegetacionSistema;
+    private javax.swing.JTextField txtFielDescripcion;
+    private javax.swing.JTextField txtFieldClima;
     private javax.swing.JTextField txtFieldNombreHabitat;
-    private javax.swing.JTextField txtFieldNombreHabitat1;
-    private javax.swing.JTextField txtFieldNombreHabitat2;
-    private javax.swing.JTextField txtFieldNombreHabitat4;
+    private javax.swing.JTextField txtFieldVegetacion;
     // End of variables declaration//GEN-END:variables
 }

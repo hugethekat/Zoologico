@@ -9,12 +9,10 @@ import com.itson.Interfaces.iAnimal;
 import com.itson.dominio.Animal;
 import com.itson.dominio.Sexo;
 import com.itson.utils.FormatoColecciones;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 /**
  *

@@ -41,4 +41,9 @@ public class CtrlHabitats implements iLogica {
         return bh;
     }
 
+    @Override
+    public boolean activaCampos(Object object) {
+        return object != null;
+    }
+
 }

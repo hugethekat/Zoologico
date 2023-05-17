@@ -65,9 +65,9 @@
                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtFieldNombreHabitat2" alignment="0" max="32767" attributes="0"/>
-                  <Component id="txtFieldNombreHabitat1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="txtFieldNombreHabitat4" alignment="0" max="32767" attributes="0"/>
+                  <Component id="txtFieldClima" alignment="0" max="32767" attributes="0"/>
+                  <Component id="txtFielDescripcion" alignment="0" max="32767" attributes="0"/>
+                  <Component id="txtFieldVegetacion" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
@@ -175,15 +175,15 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtFieldNombreHabitat2" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtFieldClima" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtFieldNombreHabitat1" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtFielDescripcion" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="32767" attributes="0"/>
-                              <Component id="txtFieldNombreHabitat4" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtFieldVegetacion" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -205,14 +205,16 @@
                           </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnEliminarContinente" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnEliminarVegetacion" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnEliminarClima" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="btnAgregarClima" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnAgregarContinente" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnAgregarClima" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="btnAgregarVegetacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="btnEliminarContinente" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnEliminarVegetacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnEliminarClima" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="35" max="32767" attributes="0"/>
@@ -270,6 +272,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Verificar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVerificarActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>
@@ -281,17 +286,11 @@
         <Component class="javax.swing.JList" name="listaContinentesSistema">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-                <StringItem index="4" value="Item 5"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Continente&gt;"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -306,13 +305,7 @@
         <Component class="javax.swing.JList" name="listaVegetacionSistema">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-                <StringItem index="4" value="Item 5"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -387,13 +380,7 @@
         <Component class="javax.swing.JList" name="listaVegetacionHabitat">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-                <StringItem index="4" value="Item 5"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -412,13 +399,7 @@
         <Component class="javax.swing.JList" name="listaClimasSistema">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-                <StringItem index="4" value="Item 5"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -437,13 +418,7 @@
         <Component class="javax.swing.JList" name="listaClimasHabitat">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-                <StringItem index="4" value="Item 5"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -462,17 +437,11 @@
         <Component class="javax.swing.JList" name="listaContinentesHabitat">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-                <StringItem index="4" value="Item 5"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Continente&gt;"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -482,24 +451,36 @@
         <Property name="text" type="java.lang.String" value="Agregar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarContinenteActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAgregarClima">
       <Properties>
         <Property name="text" type="java.lang.String" value="Agregar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarClimaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAgregarVegetacion">
       <Properties>
         <Property name="text" type="java.lang.String" value="Agregar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarVegetacionActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnEliminarContinente">
       <Properties>
         <Property name="text" type="java.lang.String" value="Eliminar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarContinenteActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnEliminarVegetacion">
       <Properties>
@@ -512,6 +493,9 @@
         <Property name="text" type="java.lang.String" value="Eliminar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarClimaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
@@ -521,7 +505,7 @@
         <Property name="text" type="java.lang.String" value="Nuevo clima:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtFieldNombreHabitat1">
+    <Component class="javax.swing.JTextField" name="txtFielDescripcion">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -537,7 +521,7 @@
         <Property name="text" type="java.lang.String" value="Descripci&#xf3;n clima:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtFieldNombreHabitat2">
+    <Component class="javax.swing.JTextField" name="txtFieldClima">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -553,7 +537,7 @@
         <Property name="text" type="java.lang.String" value="Nueva vegetaci&#xf3;n:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtFieldNombreHabitat4">
+    <Component class="javax.swing.JTextField" name="txtFieldVegetacion">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -561,7 +545,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldNombreHabitat4ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFieldVegetacionActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnRegresar">
@@ -577,6 +561,9 @@
         <Property name="text" type="java.lang.String" value="Guardar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

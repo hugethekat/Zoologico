@@ -41,7 +41,7 @@ public class HabitatDAO implements iHabitat {
     }
 
     @Override
-    public Object obtenerHabitat(String nombre) {
+    public Habitat obtenerHabitat(String nombre) {
         try {
             MongoCollection<Document> collection = ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getHabitats());
 
@@ -199,7 +199,7 @@ public class HabitatDAO implements iHabitat {
 
         List<Habitat> listaAnimales = new ArrayList();
 
-        MongoCursor<Document> habitatDoc = ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getAnimales()).find().iterator();
+        MongoCursor<Document> habitatDoc = ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getHabitats()).find().iterator();
 
         while (habitatDoc.hasNext()) {
             Document document = habitatDoc.next();
