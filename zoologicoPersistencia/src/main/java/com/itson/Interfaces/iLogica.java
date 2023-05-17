@@ -10,7 +10,10 @@ package com.itson.Interfaces;
  */
 public interface iLogica {
 
-   public java.util.List<java.lang.String>[] recuperaDatosH();
-   
-   public Object verificarExistencia(String nombre);
+    public java.util.List<java.lang.String>[] recuperaDatosH();
+
+    public Object verificarExistencia(String nombre);
+
+    public boolean activaCampos(Object object);
+    
 }
