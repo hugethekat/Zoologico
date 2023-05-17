@@ -10,12 +10,21 @@ package com.itson.utils;
  */
 public class FormatoColecciones {
 
+    private static FormatoColecciones instancia;
+
+    public static FormatoColecciones getInstancia() {
+        if (instancia == null) {
+            instancia = new FormatoColecciones();
+        }
+        return instancia;
+    }
+
     public static String getAnimales() {
         return "Animales";
     }
 
     public static String getClimas() {
-        return "Clima";
+        return "Climas";
     }
 
     public static String getConocimientos() {
@@ -47,7 +56,7 @@ public class FormatoColecciones {
     }
 
     public static String getHabitats() {
-        return "Habitat";
+        return "Habitats";
     }
 
     public static String getItinerarios() {

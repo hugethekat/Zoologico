@@ -15,12 +15,21 @@ public class Habitat {
 
     private ObjectId id;
     private String nombre;
-    private List<Clima> climas;
-    private List<Vegetacion> vegetaciones;
+    private List<ObjectId> climas;
+    private List<ObjectId> vegetaciones;
     private List<Continente> continentes;
-    private List <ObjectId> especies;
+    private List<ObjectId> especies;
 
-    public Habitat() {
+    private static Habitat instancia;
+
+    public static Habitat getInstancia() {
+        if (instancia == null) {
+            instancia = new Habitat();
+        }
+        return instancia;
+    }
+
+    private Habitat() {
     }
 
     public ObjectId getId() {
@@ -47,19 +56,19 @@ public class Habitat {
         this.nombre = nombre;
     }
 
-    public List<Clima> getClimas() {
+    public List<ObjectId> getClimas() {
         return climas;
     }
 
-    public void setClimas(List<Clima> climas) {
+    public void setClimas(List<ObjectId> climas) {
         this.climas = climas;
     }
 
-    public List<Vegetacion> getVegetaciones() {
+    public List<ObjectId> getVegetaciones() {
         return vegetaciones;
     }
 
-    public void setVegetaciones(List<Vegetacion> vegetaciones) {
+    public void setVegetaciones(List<ObjectId> vegetaciones) {
         this.vegetaciones = vegetaciones;
     }
 

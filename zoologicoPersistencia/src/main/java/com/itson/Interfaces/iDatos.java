@@ -8,6 +8,6 @@ package com.itson.Interfaces;
  *
  * @author Erick
  */
-public class iDatos {
+public interface iDatos {
     
 }

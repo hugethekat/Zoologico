@@ -13,6 +13,7 @@ import java.util.List;
  */
 public interface iHabitat {
 
+    public Object obtenerHabitat(String nombre);
 
     public void guardarHabitat(Habitat habitat);
 

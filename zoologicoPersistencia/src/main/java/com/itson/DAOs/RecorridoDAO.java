@@ -23,7 +23,7 @@ import org.bson.types.ObjectId;
  */
 public class RecorridoDAO implements iRecorrido{
 
-    @Override
+   // @Override
     public Recorrido createRecorrido(double longitud,LocalDate fechaHora, ObjectId idGuia, ObjectId idItinerario, int numVisitantes, List <Queja> quejas) {
 
         Recorrido recorrido = new Recorrido();
