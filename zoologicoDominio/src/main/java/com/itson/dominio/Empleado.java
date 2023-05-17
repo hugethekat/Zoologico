@@ -5,7 +5,6 @@
 package com.itson.dominio;
 
 import java.time.LocalDate;
-import java.util.List;
 import org.bson.types.ObjectId;
 
 /**
@@ -19,7 +18,6 @@ public abstract class Empleado {
     private String direccion;
     private String telefono;
     private LocalDate fechaInicio;
-    private List<CuidadorEspecie> especies;
 
     public Empleado() {
     }

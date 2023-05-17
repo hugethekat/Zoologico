@@ -18,14 +18,51 @@ public class Especie {
     private String nombreCientifico;
     private String descripcion;
     private List<Animal> animales;
-    private List <CuidadorEspecie > cuidadores;
-
+    private List<CuidadorEspecie> cuidadores;
+    private List<Conocimiento> conocedores;
+    private Zona zona;
+    private List <ObjectId> habitats;
+    
 
     public Especie() {
     }
 
     public ObjectId getId() {
         return id;
+    }
+
+    public List<ObjectId> getHabitats() {
+        return habitats;
+    }
+
+    public void setHabitats(List<ObjectId> habitats) {
+        this.habitats = habitats;
+    }
+
+    
+    
+    public List<CuidadorEspecie> getCuidadores() {
+        return cuidadores;
+    }
+
+    public void setCuidadores(List<CuidadorEspecie> cuidadores) {
+        this.cuidadores = cuidadores;
+    }
+
+    public List<Conocimiento> getConocedores() {
+        return conocedores;
+    }
+
+    public void setConocedores(List<Conocimiento> conocedores) {
+        this.conocedores = conocedores;
+    }
+
+    public Zona getZona() {
+        return zona;
+    }
+
+    public void setZona(Zona zona) {
+        this.zona = zona;
     }
 
     public void setId(ObjectId id) {

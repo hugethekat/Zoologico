@@ -13,8 +13,29 @@ import org.bson.types.ObjectId;
  */
 public class Cuidador extends Empleado {
 
-private List <CuidadorEspecie >Especies;
+    private List<CuidadorEspecie> especies;
+    private List<Conocimiento> conocimientos;
+
+    public Cuidador() {
+    }
+
     
+    
+    public List<CuidadorEspecie> getEspecies() {
+        return especies;
+    }
+
+    public void setEspecies(List<CuidadorEspecie> Especies) {
+        this.especies = Especies;
+    }
+
+    public List<Conocimiento> getConocimientos() {
+        return conocimientos;
+    }
+
+    public void setConocimientos(List<Conocimiento> conocimientos) {
+        this.conocimientos = conocimientos;
+    }
 
 
 }

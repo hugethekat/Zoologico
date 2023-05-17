@@ -17,11 +17,9 @@ public class CuidadorEspecie {
     private ObjectId id;
     private ObjectId idEspecie;
     private ObjectId idCuidador;
-    private NivelConocimiento nivelConocimiento;
     private LocalDate fechaCargo;
 
     public CuidadorEspecie() {
-
     }
 
     public ObjectId getId() {

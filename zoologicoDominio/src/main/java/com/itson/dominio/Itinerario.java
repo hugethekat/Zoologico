@@ -4,6 +4,7 @@
  */
 package com.itson.dominio;
 
+import java.util.List;
 import org.bson.types.ObjectId;
 
 /**
@@ -16,6 +17,9 @@ public class Itinerario {
     private double duracion;
     private double longitud;
     private int maxVisitantes;
+    private List<DiaHora> diasHora;
+    private List<ObjectId> idRecorridos;
+    private List<Zona> idZonas;
 
     public Itinerario() {
     }
@@ -26,6 +30,30 @@ public class Itinerario {
 
     public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    public List<DiaHora> getDiasHora() {
+        return diasHora;
+    }
+
+    public void setDiasHora(List<DiaHora> diasHora) {
+        this.diasHora = diasHora;
+    }
+
+    public List<ObjectId> getIdRecorridos() {
+        return idRecorridos;
+    }
+
+    public void setIdRecorridos(List<ObjectId> idRecorridos) {
+        this.idRecorridos = idRecorridos;
+    }
+
+    public List<Zona> getIdZonas() {
+        return idZonas;
+    }
+
+    public void setIdZonas(List<Zona> idZonas) {
+        this.idZonas = idZonas;
     }
 
     public double getDuracion() {

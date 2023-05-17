@@ -18,6 +18,7 @@ public class Habitat {
     private List<Clima> climas;
     private List<Vegetacion> vegetaciones;
     private List<Continente> continentes;
+    private List <ObjectId> especies;
 
     public Habitat() {
     }
@@ -28,6 +29,14 @@ public class Habitat {
 
     public void setId(ObjectId id) {
         this.id = id;
+    }
+
+    public List<ObjectId> getEspecies() {
+        return especies;
+    }
+
+    public void setEspecies(List<ObjectId> especies) {
+        this.especies = especies;
     }
 
     public String getNombre() {
