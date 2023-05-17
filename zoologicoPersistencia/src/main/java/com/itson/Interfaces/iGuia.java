@@ -14,7 +14,6 @@ import java.util.List;
  */
 public interface iGuia {
 
-    public Guia createGuia();
 
     public void guardarGuia(Guia guia);
 

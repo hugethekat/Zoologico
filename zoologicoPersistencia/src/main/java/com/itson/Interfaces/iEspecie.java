@@ -12,8 +12,6 @@ import java.util.List;
  * @author Erick
  */
 public interface iEspecie {
- 
-    public Especie createEspecie();
 
     public void guardarEspecie(Especie especie);
 

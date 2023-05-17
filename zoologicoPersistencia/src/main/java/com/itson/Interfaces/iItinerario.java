@@ -13,7 +13,6 @@ import java.util.List;
  */
 public interface iItinerario {
 
-    public Itinerario createItinerario();
 
     public void guardarItinerario(Itinerario itinerario);
 

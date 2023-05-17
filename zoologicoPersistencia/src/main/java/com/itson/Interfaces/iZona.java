@@ -13,8 +13,6 @@ import java.util.List;
  */
 public interface iZona {
 
-    public Zona createZona();
-
     public void guardarZona(Zona queja);
 
     public void eliminarZona(Zona queja);

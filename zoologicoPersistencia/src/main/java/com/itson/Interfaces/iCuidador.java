@@ -17,8 +17,6 @@ import org.bson.types.ObjectId;
  */
 public interface iCuidador {
 
-    public Cuidador createCuidador(String nombre, String direccion, String telefono, LocalDate fechaInicio, List<CuidadorEspecie> especies, List<Conocimiento> conocimientos);
-
     public void guardarCuidador(Cuidador cuidador);
 
     public void eliminarCuidador(Cuidador cuidador);

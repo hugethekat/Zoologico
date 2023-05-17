@@ -4,12 +4,8 @@
  */
 package com.itson.Interfaces;
 
-import com.itson.dominio.Animal;
-import com.itson.dominio.Queja;
 import com.itson.dominio.Recorrido;
-import java.time.LocalDate;
 import java.util.List;
-import org.bson.types.ObjectId;
 
 /**
  *
@@ -17,7 +13,6 @@ import org.bson.types.ObjectId;
  */
 public interface iRecorrido {
 
-    public Recorrido createRecorrido(double longitud,LocalDate fechaHora, ObjectId idGuia, ObjectId idItinerario, int numVisitantes, List <Queja> quejas);
 
     public void guardarRecorrido(Recorrido recorrido);
 

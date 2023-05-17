@@ -13,9 +13,10 @@ import java.util.List;
  * @author Erick
  */
 public interface iAnimal {
- 
-    public Animal createAnimal(String nombre, int edad, Sexo sexo);
+
     public void guardarAnimal(Animal animal);
+
     public void eliminarAnimal(Animal animal);
-    public List <Animal> consultarAnimales();
+
+    public List<Animal> consultarAnimales();
 }
