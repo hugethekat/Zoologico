@@ -6,20 +6,19 @@ package com.itson.DAOs;
 
 import com.itson.BaseDeDatos.ConexionDB;
 import com.itson.Interfaces.iItinerario;
-import com.itson.dominio.Animal;
 import com.itson.dominio.DiaHora;
 import com.itson.dominio.Dias;
+import com.itson.dominio.Guia;
 import com.itson.dominio.Zona;
 import com.itson.dominio.Itinerario;
 import com.itson.dominio.Recorrido;
-import com.itson.dominio.Sexo;
 import com.itson.utils.FormatoColecciones;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -64,7 +63,7 @@ public class ItinerarioDAO implements iItinerario {
 //
 //        ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getItinerarios()).insertOne(itinerarioDoc);
 
-        MongoCollection<Document> itinerariosCollection = ConexionDB.obtenerInstancia().getCollection("itinerarios");
+        MongoCollection<Document> itinerariosCollection = ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getItinerarios());
 
         Document itinerarioDocument = new Document();
         itinerarioDocument.append("nombre", itinerario.getNombre());
@@ -81,13 +80,19 @@ public class ItinerarioDAO implements iItinerario {
 
         List<ObjectId> idRecorridos = new ArrayList<>();
 
-        MongoCollection<Document> recorridosCollection = ConexionDB.obtenerInstancia().getCollection("recorridos");
+        MongoCollection<Document> recorridosCollection = ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getRecorridos());
 
         for (DiaHora diaHora : itinerario.getDiasHora()) {
             Recorrido recorrido = new Recorrido();
             recorrido.setDuracion(itinerario.getDuracion());
             recorrido.setLongitud(itinerario.getLongitud());
             recorrido.setNumVisitantes(itinerario.getMaxVisitantes());
+//Obtiene un guía aleatorio para asignarle un recorrido
+            List<Guia> guias = GuiaDAO.getInstancia().consultarGuia();
+            Guia guia = guias.get((int) (Math.random() * ((guias.size() - 0) + 1)));
+
+            recorrido.setIdGuia(guia.getId());
+
             //recorrido.setFechaHora(diaHora.getFechaHora());
             recorrido.setQuejas(new ArrayList<>()); // Agrega lógica para las quejas si es necesario
             recorrido.setIdGuia(new ObjectId()); // Asigna el ObjectId del guía correspondiente
@@ -98,7 +103,7 @@ public class ItinerarioDAO implements iItinerario {
             recorridoDocument.put("longitud", recorrido.getLongitud());
             recorridoDocument.put("numVisitantes", recorrido.getNumVisitantes());
             recorridoDocument.put("fechaHora", recorrido.getFechaHora());
-            //recorridoDocument.put("idGuia", recorrido.getIdGuia());
+            recorridoDocument.put("idGuia", recorrido.getIdGuia());
             recorridoDocument.put("idItinerario", recorrido.getIdItinerario());
 
             recorridosCollection.insertOne(recorridoDocument);
@@ -140,7 +145,7 @@ public class ItinerarioDAO implements iItinerario {
 
     @Override
     public Itinerario consultarItinerario(String nombre) {
-        MongoCollection<Document> itinerariosCollection = ConexionDB.obtenerInstancia().getCollection("itinerarios");
+        MongoCollection<Document> itinerariosCollection = ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getItinerarios());
         Document query = new Document("nombre", nombre);
         Document result = itinerariosCollection.find(query).first();
 
