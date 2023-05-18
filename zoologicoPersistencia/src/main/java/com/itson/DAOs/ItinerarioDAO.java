@@ -70,7 +70,16 @@ public class ItinerarioDAO implements iItinerario {
         itinerarioDocument.append("duracion", itinerario.getDuracion());
         itinerarioDocument.append("longitud", itinerario.getLongitud());
         itinerarioDocument.append("maxVisitantes", itinerario.getMaxVisitantes());
-        itinerarioDocument.append("diasHora", itinerario.getDiasHora());
+
+     
+        List<Document> diaHoraDocs = new ArrayList<>();
+
+        for (DiaHora diaHora : itinerario.getDiasHora()) {
+            Document diaHoraDoc = new Document("Dia", diaHora.getDia())
+                    .append("Hora", diaHora.getHora());
+            diaHoraDocs.add(diaHoraDoc);
+        }
+
         itinerarioDocument.append("Zonas", itinerario.getIdZonas());
 
         // Insertar el itinerario sin las IDs de los recorridos
