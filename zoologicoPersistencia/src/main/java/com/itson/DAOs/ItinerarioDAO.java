@@ -87,9 +87,10 @@ public class ItinerarioDAO implements iItinerario {
         ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getItinerarios()).deleteOne(itinerarioDoc);
     }
 
+    @Override
     public Itinerario consultarItinerario(String nombre) {
         MongoCollection<Document> itinerariosCollection = ConexionDB.obtenerInstancia().getCollection("itinerarios");
-        Document query = new Document("Nombre", nombre);
+        Document query = new Document("nombre", nombre);
         Document result = itinerariosCollection.find(query).first();
 
         if (result != null) {

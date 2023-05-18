@@ -14,6 +14,17 @@ import com.itson.dominio.Habitat;
  */
 public class Logica {
 
+    private static Logica instancia;
+
+    public static Logica obtenerInstancia() {
+
+        if (instancia == null) {
+            Logica instancia = new Logica();
+            return instancia;
+        }
+        return instancia;
+    }
+    
     public DatosHabitat recuperaDatosHabitat() {
         return ControlHabitat.obtenerInstancia().recuperaDatosHabitat();
     }

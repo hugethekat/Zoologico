@@ -4,6 +4,7 @@
  */
 package com.itson.GUI;
 
+import com.itson.DAOs.GuiaDAO;
 import com.itson.dominio.Clima;
 import com.itson.dominio.DiaHora;
 import com.itson.dominio.Dias;
@@ -15,6 +16,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import com.itson.DAOs.ItinerarioDAO;
 import com.itson.DAOs.ZonaDAO;
+import com.itson.Interfaces.iItinerario;
+import com.itson.dominio.Guia;
 import com.itson.dominio.Zona;
 
 /**
@@ -41,6 +44,7 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
 
         DefaultComboBoxModel<Dias> modelD = new DefaultComboBoxModel<>();
         DefaultComboBoxModel<String> modelH = new DefaultComboBoxModel<>();
+        DefaultListModel<Guia> modelGU = new DefaultListModel<>();
 
         // Añadir los elementos de la enumeración al modelo
         for (Dias dia : Dias.values()) {
@@ -59,10 +63,17 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
             modelZ.addElement(elemento);
         }
 
+        List<Guia> guias = GuiaDAO.getInstancia().consultarGuia();
+
+        for (Guia tilin : guias) {
+            modelGU.addElement(tilin);
+        }
+
         initComponents();
         comboDia.setModel(modelD);
         comboHora.setModel(modelH);
         listaZonasElegir.setModel(modelZ);
+        listGuias.setModel(modelGU);
 
     }
 
@@ -90,7 +101,7 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         listDiasSemana = new javax.swing.JList<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listGuias = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         listaZonasElegir = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
@@ -107,11 +118,11 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Registro/Actualización Itinerario");
 
-        jLabel1.setText("Registro/Actualización itinerarios");
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        jLabel1.setText("Registro/Actualización itinerarios");
 
-        jLabel5.setText("Itinerario:");
         jLabel5.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel5.setText("Itinerario:");
 
         btnAgregarZona.setText("Agregar");
         btnAgregarZona.setEnabled(false);
@@ -165,8 +176,8 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Duración (minutos):");
         jLabel6.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel6.setText("Duración (minutos):");
 
         txtDuracion.setEditable(false);
         txtDuracion.addActionListener(new java.awt.event.ActionListener() {
@@ -175,8 +186,8 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("Longitud (metros):");
         jLabel7.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel7.setText("Longitud (metros):");
 
         txtLongitud.setEditable(false);
         txtLongitud.addActionListener(new java.awt.event.ActionListener() {
@@ -188,36 +199,31 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
         listaZonas.setEnabled(false);
         jScrollPane3.setViewportView(listaZonas);
 
-        jLabel9.setText("Zona");
         jLabel9.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel9.setText("Zona");
 
-        jLabel10.setText("Días de la semana");
         jLabel10.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel10.setText("Días de la semana");
 
         listDiasSemana.setEnabled(false);
         jScrollPane4.setViewportView(listDiasSemana);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(listGuias);
 
         listaZonasElegir.setEnabled(false);
         jScrollPane2.setViewportView(listaZonasElegir);
 
-        jLabel2.setText("Guías");
         jLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel2.setText("Guías");
 
-        jLabel3.setText("Zonas");
         jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel3.setText("Zonas");
 
-        jLabel4.setText("Registrado en sistema");
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel4.setText("Registrado en sistema");
 
-        jLabel14.setText("Número máximo de visitantes:");
         jLabel14.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel14.setText("Número máximo de visitantes:");
 
         txtMaxVisitantes.setEditable(false);
         txtMaxVisitantes.addActionListener(new java.awt.event.ActionListener() {
@@ -226,11 +232,11 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
             }
         });
 
-        jLabel15.setText("Día:");
         jLabel15.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel15.setText("Día:");
 
-        jLabel16.setText("Hora:");
         jLabel16.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        jLabel16.setText("Hora:");
 
         btnAgregarDiaHora.setText("Agregar");
         btnAgregarDiaHora.setEnabled(false);
@@ -395,7 +401,14 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
 
     private void btnVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarActionPerformed
 
-        
+        //aqui no taba jalando el singleton
+        String nombre;
+
+        nombre = this.txtNomItinerario.getText();
+
+        ItinerarioDAO iTi = ItinerarioDAO.getInstancia();
+
+        iTi.consultarItinerario(nombre);
 
         btnAgregarZona.setEnabled(true);
         btnEliminarGuia.setEnabled(true);
@@ -413,8 +426,9 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
         listDiasSemana.setEnabled(true);
         listaZonas.setEnabled(true);
         listaZonasElegir.setEnabled(true);
-        
-        
+        listGuias.setEnabled(true);
+
+
     }//GEN-LAST:event_btnVerificarActionPerformed
 
     private void txtDuracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDuracionActionPerformed
@@ -483,7 +497,6 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnAgregarZonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarZonaActionPerformed
-        
 
         modelZR.addElement(listaZonasElegir.getSelectedValue());
 
@@ -523,12 +536,12 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JList<DiaHora> listDiasSemana;
+    private javax.swing.JList<Guia> listGuias;
     private javax.swing.JList<Zona> listaZonas;
     private javax.swing.JList<Zona> listaZonasElegir;
     private javax.swing.JTextField txtDuracion;
