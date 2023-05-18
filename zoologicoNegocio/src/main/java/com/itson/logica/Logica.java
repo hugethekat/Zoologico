@@ -39,4 +39,7 @@ public class Logica {
     public Habitat verificarExistencia(String nombre) {
         return ControlHabitat.obtenerInstancia().buscaHabitat(nombre);
     }
+    
+    
+    
 }

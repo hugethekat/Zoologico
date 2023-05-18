@@ -7,6 +7,7 @@ package com.itson.DAOs;
 import com.itson.BaseDeDatos.ConexionDB;
 import com.itson.Interfaces.iGuia;
 import com.itson.dominio.Guia;
+import com.itson.utils.FormatoColecciones;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -30,11 +31,23 @@ public class GuiaDAO implements iGuia {
     }
 
     @Override
+    public void guardarGuia(Guia guia) {
+
+        Document guiaDiocs = new Document("Nombre", guia.getNombre())
+                .append("Direccion", guia.getDireccion())
+                .append("Fecha de contratacion", guia.getFechaInicio())
+                .append("Telefono", guia.getTelefono());
+
+        ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getGuias()).insertOne(guiaDiocs);
+
+    }
+
+    @Override
     public List<Guia> consultarGuia() {
         List<Guia> guias = new ArrayList<>();
 
         // Obtener la colección de guías
-        MongoCollection<Document> guiasCollection = ConexionDB.obtenerInstancia().getCollection("guias");
+        MongoCollection<Document> guiasCollection = ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getGuias());
 
         // Realizar la consulta para obtener todos los documentos
         FindIterable<Document> guiasDocuments = guiasCollection.find();
@@ -43,7 +56,7 @@ public class GuiaDAO implements iGuia {
         try (MongoCursor<Document> cursor = guiasDocuments.iterator()) {
             while (cursor.hasNext()) {
                 Document guiaDocument = cursor.next();
-                String nombre = guiaDocument.getString("nombre");
+                String nombre = guiaDocument.getString("Nombre");
 
                 // Crear un objeto Guia y agregarlo a la lista
                 Guia guia = new Guia();
