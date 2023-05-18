@@ -57,8 +57,6 @@ public class Itinerario {
         this.idZonas = idZonas;
     }
 
-   
-
     public double getDuracion() {
         return duracion;
     }
@@ -91,6 +89,9 @@ public class Itinerario {
         this.nombre = nombre;
     }
 
-    
-    
+    @Override
+    public String toString() {
+        return getNombre();
+    }
+
 }

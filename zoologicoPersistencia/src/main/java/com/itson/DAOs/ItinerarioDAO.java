@@ -13,6 +13,7 @@ import com.itson.dominio.Zona;
 import com.itson.dominio.Itinerario;
 import com.itson.dominio.Recorrido;
 import com.itson.utils.FormatoColecciones;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
@@ -71,7 +72,6 @@ public class ItinerarioDAO implements iItinerario {
         itinerarioDocument.append("longitud", itinerario.getLongitud());
         itinerarioDocument.append("maxVisitantes", itinerario.getMaxVisitantes());
 
-     
         List<Document> diaHoraDocs = new ArrayList<>();
 
         for (DiaHora diaHora : itinerario.getDiasHora()) {
@@ -137,8 +137,8 @@ public class ItinerarioDAO implements iItinerario {
         }
 
         List<ObjectId> idZonas = itinerario.getIdZonas();
-            itinerario.setIdZonas(idZonas);
-        
+        itinerario.setIdZonas(idZonas);
+
         Document itinerarioDoc = new Document("Duracion", itinerario.getDuracion())
                 .append("Longitud", itinerario.getLongitud())
                 .append("MaxVisitantes", itinerario.getMaxVisitantes())
@@ -197,4 +197,28 @@ public class ItinerarioDAO implements iItinerario {
             return itinerario;
         }
     }
+
+    @Override
+    public List<Itinerario> obtenerItinerarios() {
+        MongoCollection<Document> itinerariosCollection = ConexionDB.obtenerInstancia().getCollection("itinerarios");
+        List<Itinerario> listaItinerarios = new ArrayList<>();
+
+        FindIterable<Document> itinerariosDocs = itinerariosCollection.find();
+        for (Document itinerarioDoc : itinerariosDocs) {
+            Itinerario itinerario = new Itinerario();
+            itinerario.setId(itinerarioDoc.getObjectId("_id"));
+            itinerario.setNombre(itinerarioDoc.getString("nombre"));
+            itinerario.setDuracion(itinerarioDoc.getDouble("duracion"));
+            itinerario.setLongitud(itinerarioDoc.getDouble("longitud"));
+            itinerario.setMaxVisitantes(itinerarioDoc.getInteger("maxVisitantes"));
+            itinerario.setDiasHora(itinerarioDoc.get("diasHora", ArrayList.class)); // Ajusta esto según el tipo de datos de los días y horas
+            itinerario.setIdRecorridos(itinerarioDoc.get("idRecorridos", ArrayList.class)); // Ajusta esto según el tipo de datos de los ID de recorridos
+            itinerario.setIdZonas(itinerarioDoc.get("Zonas", ArrayList.class)); // Ajusta esto según el tipo de datos de las zonas
+
+            listaItinerarios.add(itinerario);
+        }
+
+        return listaItinerarios;
+    }
+
 }

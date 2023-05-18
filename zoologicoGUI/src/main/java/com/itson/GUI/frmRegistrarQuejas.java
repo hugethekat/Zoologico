@@ -4,9 +4,17 @@
  */
 package com.itson.GUI;
 
+import com.itson.DAOs.GuiaDAO;
+import com.itson.DAOs.ItinerarioDAO;
 import com.itson.DAOs.QuejaDAO;
+import com.itson.dominio.Dias;
+import com.itson.dominio.Guia;
+import com.itson.dominio.Itinerario;
 import com.itson.dominio.Queja;
+import com.itson.dominio.Zona;
+import java.util.List;
 import java.util.regex.Pattern;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -36,6 +44,17 @@ public class frmRegistrarQuejas extends javax.swing.JFrame {
      */
     private frmRegistrarQuejas() {
         initComponents();
+
+        DefaultListModel<Itinerario> modelIT = new DefaultListModel<>();
+        //DefaultListModel<Hora> modelHoras = new DefaultListModel<>();
+        DefaultListModel<Dias> modelIDias = new DefaultListModel<>();
+        List<Itinerario> itinerarios = ItinerarioDAO.getInstancia().obtenerItinerarios();
+
+        for (Itinerario tilin : itinerarios) {
+            modelIT.addElement(tilin);
+        }
+        
+        listItinerarios.setModel(modelIT);
     }
 
     @SuppressWarnings("unchecked")
@@ -48,15 +67,15 @@ public class frmRegistrarQuejas extends javax.swing.JFrame {
         btnAgregarGuia = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        listDias = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        listItinerarios = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
+        listHoras = new javax.swing.JList<>();
         jLabel5 = new javax.swing.JLabel();
         btnAgregarGuia1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -74,6 +93,11 @@ public class frmRegistrarQuejas extends javax.swing.JFrame {
         setTitle("Registrar Quejas");
 
         btnAgregarHabitat.setText("Escoger");
+        btnAgregarHabitat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarHabitatActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -95,19 +119,9 @@ public class frmRegistrarQuejas extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel1.setText("Registrar quejas");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(listDias);
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(listItinerarios);
 
         jLabel2.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel2.setText("Días");
@@ -125,12 +139,7 @@ public class frmRegistrarQuejas extends javax.swing.JFrame {
             }
         });
 
-        jList3.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jList3);
+        jScrollPane3.setViewportView(listHoras);
 
         jLabel5.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         jLabel5.setText("Horas");
@@ -358,6 +367,10 @@ public class frmRegistrarQuejas extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void btnAgregarHabitatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarHabitatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarHabitatActionPerformed
+
     public boolean validarFormatoCorreo(String texto) {
         return EMAIL_PATTERN.matcher(texto).matches();
     }
@@ -390,13 +403,13 @@ public class frmRegistrarQuejas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
-    private javax.swing.JList<String> jList3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JList<String> listDias;
+    private javax.swing.JList<String> listHoras;
+    private javax.swing.JList<Itinerario> listItinerarios;
     private javax.swing.JTextField txtAsunto;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDescripcion;

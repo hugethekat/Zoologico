@@ -18,4 +18,6 @@ public interface iItinerario {
     public void eliminarItinerario(Itinerario itinerario);
 
     public Itinerario consultarItinerario(String nombre);
+    
+    public List<Itinerario> obtenerItinerarios();
 }
