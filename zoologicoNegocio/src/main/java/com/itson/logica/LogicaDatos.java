@@ -7,11 +7,13 @@ package com.itson.logica;
 import com.itson.DAOs.GuiaDAO;
 import com.itson.DAOs.HabitatDAO;
 import com.itson.DAOs.ItinerarioDAO;
+import com.itson.DAOs.ZonaDAO;
 import com.itson.dominio.Clima;
 import com.itson.dominio.Itinerario;
 import com.itson.dominio.Guia;
 import com.itson.dominio.Habitat;
 import com.itson.dominio.Vegetacion;
+import com.itson.dominio.Zona;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
@@ -69,11 +71,17 @@ public class LogicaDatos {
         return GuiaDAO.getInstancia().consultarGuia();
     }
 
+    public List <Zona> obtenerZonas(){
+        return ZonaDAO.getInstancia().consultarZona();
+    }
+    
+ 
     public void guardarItinerario(Itinerario itinerario) {
 
         ItinerarioDAO.getInstancia().guardarItinerario(itinerario);
 
     }
+   
 
     public Itinerario buscaItinerario(String nombre) {
         return ItinerarioDAO.getInstancia().consultarItinerario(nombre);
@@ -82,6 +90,7 @@ public class LogicaDatos {
 //    public List<Cuidador>recuperaCuidadores(){
 //        return CuidadorDAO.
 //    }
+    
     
     public List <Habitat> recuperaHabitats(){
         

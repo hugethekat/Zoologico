@@ -5,8 +5,11 @@
 package com.itson.logica;
 
 import com.itson.control.ControlHabitat;
+import com.itson.control.ControlItinerarios;
 import com.itson.dominio.DatosHabitat;
+import com.itson.dominio.DatosItinerario;
 import com.itson.dominio.Habitat;
+import com.itson.dominio.Itinerario;
 
 /**
  *
@@ -28,6 +31,18 @@ public class Logica {
     private Logica() {
     }
 
+    public void guardarItinerario(Itinerario itinerario) {
+        ControlItinerarios.obtenerInstancia().guardarItinerario(itinerario);
+    }
+
+    public Itinerario buscaItinerario(String nombre) {
+        return ControlItinerarios.obtenerInstancia().buscaItinerario(nombre);
+    }
+
+    public DatosItinerario recuperaDatosItinerario() {
+        return ControlItinerarios.obtenerInstancia().recuperaDatosItinerario();
+    }
+    
     public void guardarHabitat(Habitat habitat){
         LogicaDatos.obtenerInstancia().guardarHabitat(habitat);
     }
