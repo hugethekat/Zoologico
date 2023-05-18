@@ -11,8 +11,7 @@ import java.util.List;
  * @author Erick
  */
 public class DiaHora {
-    
-    
+
     private Dias dia;
     private String hora;
 
@@ -35,10 +34,14 @@ public class DiaHora {
         this.hora = hora;
     }
 
-    @Override
-    public String toString() {
-        return  dia + " " +  hora;
+    public DiaHora(Dias dia, String hora) {
+        this.dia = dia;
+        this.hora = hora;
     }
 
+    @Override
+    public String toString() {
+        return dia + " " + hora;
+    }
 
 }

@@ -13,10 +13,9 @@ import java.util.List;
  */
 public interface iItinerario {
 
-
     public void guardarItinerario(Itinerario itinerario);
 
     public void eliminarItinerario(Itinerario itinerario);
 
-    public List<Itinerario> consultarItinerario();
+    public Itinerario consultarItinerario(String nombre);
 }

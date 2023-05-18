@@ -158,7 +158,7 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
             }
         });
 
-        btnVerificar.setText("Verificar");
+        btnVerificar.setText("Buscar");
         btnVerificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerificarActionPerformed(evt);
@@ -394,6 +394,9 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomItinerarioActionPerformed
 
     private void btnVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarActionPerformed
+
+        
+
         btnAgregarZona.setEnabled(true);
         btnEliminarGuia.setEnabled(true);
         btnEliminarZona.setEnabled(true);
@@ -410,6 +413,8 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
         listDiasSemana.setEnabled(true);
         listaZonas.setEnabled(true);
         listaZonasElegir.setEnabled(true);
+        
+        
     }//GEN-LAST:event_btnVerificarActionPerformed
 
     private void txtDuracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDuracionActionPerformed

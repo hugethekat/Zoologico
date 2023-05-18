@@ -14,6 +14,7 @@ import org.bson.types.ObjectId;
 public class Itinerario {
 
     private ObjectId id;
+    private String nombre;
     private double duracion;
     private double longitud;
     private int maxVisitantes;
@@ -78,6 +79,14 @@ public class Itinerario {
 
     public void setMaxVisitantes(int maxVisitantes) {
         this.maxVisitantes = maxVisitantes;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     
