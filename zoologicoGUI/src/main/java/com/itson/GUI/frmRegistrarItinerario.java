@@ -4,8 +4,6 @@
  */
 package com.itson.GUI;
 
-import com.itson.DAOs.GuiaDAO;
-import com.itson.dominio.Clima;
 import com.itson.dominio.DiaHora;
 import com.itson.dominio.Dias;
 import com.itson.dominio.Itinerario;
@@ -13,13 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
-import com.itson.DAOs.ItinerarioDAO;
-import com.itson.DAOs.ZonaDAO;
-import com.itson.Interfaces.iItinerario;
 import com.itson.dominio.Guia;
 import com.itson.dominio.Zona;
+import com.itson.logica.Logica;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
 import org.bson.types.ObjectId;
 
 /**
@@ -47,6 +43,7 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
         DefaultComboBoxModel<Dias> modelD = new DefaultComboBoxModel<>();
         DefaultComboBoxModel<String> modelH = new DefaultComboBoxModel<>();
         DefaultListModel<Guia> modelGU = new DefaultListModel<>();
+        DefaultListModel<Zona> modelZ = new DefaultListModel<>();
 
         // Añadir los elementos de la enumeración al modelo
         for (Dias dia : Dias.values()) {
@@ -59,14 +56,12 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
             modelH.addElement(horaString);
         }
 
-        List<Zona> zonas = ZonaDAO.getInstancia().consultarZona();
+        for (Zona zona : Logica.obtenerInstancia().recuperaDatosItinerario().getZonas()) {
+            modelZ.addElement(zona);
 
-        for (Zona elemento : zonas) {
-            modelZ.addElement(elemento);
         }
 
-        List<Guia> guias = GuiaDAO.getInstancia().consultarGuia();
-
+        List<Guia> guias = Logica.obtenerInstancia().recuperaDatosItinerario().getGuias();
         for (Guia tilin : guias) {
             modelGU.addElement(tilin);
         }
@@ -404,31 +399,70 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
     private void btnVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarActionPerformed
 
         //aqui no taba jalando el singleton
-        String nombre;
+        Itinerario itinerarioTemp = Logica.obtenerInstancia().buscaItinerario(txtNomItinerario.getText());
+       
+        if (itinerarioTemp != null) {
+            showMessageDialog(this, "Itinerario ya existente");
 
-        nombre = this.txtNomItinerario.getText();
+            DefaultListModel<Zona> modelZona = new DefaultListModel<>();
+            DefaultListModel<DiaHora> modelDiaHora = new DefaultListModel<>();
 
-        ItinerarioDAO iTi = ItinerarioDAO.getInstancia();
+            for (ObjectId zonaId : itinerarioTemp.getIdZonas()) {
+                for (Zona zona : Logica.obtenerInstancia().recuperaDatosItinerario().getZonas()) {
+                    if (zonaId.equals(zona.getId())) {
+                        modelZona.addElement(zona);
 
-        iTi.consultarItinerario(nombre);
+                    }
+                }
+            }
+            
+            for (DiaHora diaHora : itinerarioTemp.getDiasHora()){
+                modelDiaHora.addElement(diaHora);
+            }
+            listDiasSemana.setModel(modelDiaHora);
+            listaZonas.setModel(modelZona);
 
-        btnAgregarZona.setEnabled(true);
-        btnEliminarGuia.setEnabled(true);
-        btnEliminarZona.setEnabled(true);
-        btnGuardar.setEnabled(true);
-        btnAgregarDiaHora.setEnabled(true);
+        } else {
 
-        txtDuracion.setEditable(true);
-        txtLongitud.setEditable(true);
-        txtMaxVisitantes.setEditable(true);
-        txtNomItinerario.setEditable(true);
+            btnAgregarZona.setEnabled(true);
+            btnEliminarGuia.setEnabled(true);
+            btnEliminarZona.setEnabled(true);
+            btnGuardar.setEnabled(true);
+            btnAgregarDiaHora.setEnabled(true);
 
-        comboDia.setEnabled(true);
-        comboHora.setEnabled(true);
-        listDiasSemana.setEnabled(true);
-        listaZonas.setEnabled(true);
-        listaZonasElegir.setEnabled(true);
-        listGuias.setEnabled(true);
+            txtDuracion.setEditable(true);
+            txtLongitud.setEditable(true);
+            txtMaxVisitantes.setEditable(true);
+            txtNomItinerario.setEditable(true);
+
+            comboDia.setEnabled(true);
+            comboHora.setEnabled(true);
+            listDiasSemana.setEnabled(true);
+            listaZonas.setEnabled(true);
+            listaZonasElegir.setEnabled(true);
+            listGuias.setEnabled(true);
+        }
+
+        if (txtNomItinerario.getText().isBlank()) {
+            showMessageDialog(this, "Ingrese un itinerario");
+            btnAgregarZona.setEnabled(false);
+            btnEliminarGuia.setEnabled(false);
+            btnEliminarZona.setEnabled(false);
+            btnGuardar.setEnabled(false);
+            btnAgregarDiaHora.setEnabled(false);
+
+            txtDuracion.setEditable(false);
+            txtLongitud.setEditable(false);
+            txtMaxVisitantes.setEditable(false);
+            txtNomItinerario.setEditable(false);
+
+            comboDia.setEnabled(false);
+            comboHora.setEnabled(false);
+            listDiasSemana.setEnabled(false);
+            listaZonas.setEnabled(false);
+            listaZonasElegir.setEnabled(false);
+            listGuias.setEnabled(false);
+        }
     }//GEN-LAST:event_btnVerificarActionPerformed
 
     private void txtDuracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDuracionActionPerformed
@@ -509,7 +543,8 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
         }
         itinerario.setIdZonas(zonasIds);
 
-        ItinerarioDAO.getInstancia().guardarItinerario(itinerario);
+        Logica.obtenerInstancia().guardarItinerario(itinerario);
+        
         }
 
     }//GEN-LAST:event_btnGuardarActionPerformed

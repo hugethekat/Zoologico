@@ -5,6 +5,8 @@
 package com.itson.Main;
 
 import com.itson.GUI.frmInicio;
+import com.itson.logica.Logica;
+import com.itson.logica.LogicaDatos;
 
 /**
  *
@@ -19,6 +21,14 @@ public class Main {
 
         frmInicio.obtenerInstancia().setVisible(true);
 
+        if (Logica.obtenerInstancia().recuperaDatosItinerario().getGuias().isEmpty()) {
+            LogicaDatos.obtenerInstancia().hardcodeaGuias();
+        }
+
+        if (Logica.obtenerInstancia().recuperaDatosItinerario().getZonas().isEmpty()) {
+            LogicaDatos.obtenerInstancia().hardcodeaZonas();
+        }
+
     }
-    
+
 }

@@ -153,37 +153,38 @@ public class ItinerarioDAO implements iItinerario {
         MongoCollection<Document> itinerariosCollection = ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getItinerarios());
         Document query = new Document("nombre", nombre);
         Document result = itinerariosCollection.find(query).first();
+        if (result != null) {
+            Itinerario itinerario = new Itinerario();
+            itinerario.setId(result.getObjectId("_id"));
+            itinerario.setNombre(result.getString("nombre"));
+            itinerario.setDuracion(result.getDouble("duracion"));
+            itinerario.setLongitud(result.getDouble("longitud"));
+            itinerario.setMaxVisitantes(result.getInteger("maxVisitantes"));
 
-        Itinerario itinerario = new Itinerario();
-        itinerario.setId(result.getObjectId("_id"));
-        itinerario.setNombre(result.getString("nombre"));
-        itinerario.setDuracion(result.getDouble("duracion"));
-        itinerario.setLongitud(result.getDouble("longitud"));
-        itinerario.setMaxVisitantes(result.getInteger("maxVisitantes"));
+            // Convertir la lista de objetos Document a List<DiaHora>
+            List<Document> diasHoraDocuments = (List<Document>) result.get("diasHora");
+            List<DiaHora> diasHora = new ArrayList<>();
+            for (Document diaHoraDocument : diasHoraDocuments) {
+                String diaString = diaHoraDocument.getString("dia");
+                Dias dia = Dias.valueOf(diaString); // Convertir el String a enum Dia
+                String hora = diaHoraDocument.getString("hora");
+                DiaHora diaHora = new DiaHora(dia, hora);
+                diasHora.add(diaHora);
+            }
+            itinerario.setDiasHora(diasHora);
 
-        // Convertir la lista de objetos Document a List<DiaHora>
-        List<Document> diasHoraDocuments = (List<Document>) result.get("diasHora");
-        List<DiaHora> diasHora = new ArrayList<>();
-        for (Document diaHoraDocument : diasHoraDocuments) {
-            String diaString = diaHoraDocument.getString("dia");
-            Dias dia = Dias.valueOf(diaString); // Convertir el String a enum Dia
-            String hora = diaHoraDocument.getString("hora");
-            DiaHora diaHora = new DiaHora(dia, hora);
-            diasHora.add(diaHora);
+            // Obtener la lista de ObjectId directamente
+            itinerario
+                    .setIdRecorridos(result.getList("idRecorridos", ObjectId.class
+                    ));
+
+            // Convertir la lista de objetos Document a List<Zona>
+            List<ObjectId> idZonas = result.getList("idZonas", ObjectId.class);
+            itinerario.setIdZonas(idZonas);
+
+            return itinerario;
         }
-        itinerario.setDiasHora(diasHora);
-
-        // Obtener la lista de ObjectId directamente
-        itinerario
-                .setIdRecorridos(result.getList("idRecorridos", ObjectId.class
-                ));
-
-        // Convertir la lista de objetos Document a List<Zona>
-        List<ObjectId> idZonas = result.getList("idZonas", ObjectId.class);
-        itinerario.setIdZonas(idZonas);
-
-        return itinerario;
-
+        return null;
     }
 
     @Override

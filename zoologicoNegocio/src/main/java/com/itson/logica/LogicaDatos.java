@@ -9,6 +9,7 @@ import com.itson.DAOs.HabitatDAO;
 import com.itson.DAOs.ItinerarioDAO;
 import com.itson.DAOs.ZonaDAO;
 import com.itson.dominio.Clima;
+import com.itson.dominio.Especie;
 import com.itson.dominio.Itinerario;
 import com.itson.dominio.Guia;
 import com.itson.dominio.Habitat;
@@ -16,7 +17,9 @@ import com.itson.dominio.Vegetacion;
 import com.itson.dominio.Zona;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -62,12 +65,47 @@ public class LogicaDatos {
         GuiaDAO.getInstancia().guardarGuia(guia3);
     }
     
+    public void hardcodeaZonas() {
+        
+        List<Especie> especies = new ArrayList();
+        List<ObjectId> itinerariosId = new ArrayList();
+        Zona zona1 = new Zona();
+        zona1.setEspecies(especies);
+        zona1.setExtension(123);
+        zona1.setIdItinerarios(itinerariosId);
+        zona1.setNombre("Reptiles");
+        
+        Zona zona2 = new Zona();
+        zona2.setEspecies(especies);
+        zona2.setExtension(43);
+        zona2.setIdItinerarios(itinerariosId);
+        zona2.setNombre("Aves");
+        
+        Zona zona3 = new Zona();
+        zona3.setEspecies(especies);
+        zona3.setExtension(213);
+        zona3.setIdItinerarios(itinerariosId);
+        zona3.setNombre("Felinos");
+        
+        Zona zona4 = new Zona();
+        zona4.setEspecies(especies);
+        zona4.setExtension(121);
+        zona4.setIdItinerarios(itinerariosId);
+        zona4.setNombre("Polar");
+        
+        Zona zona5 = new Zona();
+        zona1.setEspecies(especies);
+        zona1.setExtension(341);
+        zona1.setIdItinerarios(itinerariosId);
+        zona1.setNombre("Marino");
+        
+        
+    }
+
 //    public void guardarQueja(){
 //        QuejaDAO.
 //    }
-    
-    
-    public List <Guia> obtenerGuias(){
+    public List<Guia> obtenerGuias() {
         return GuiaDAO.getInstancia().consultarGuia();
     }
 
