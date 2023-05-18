@@ -19,6 +19,8 @@ import com.itson.DAOs.ZonaDAO;
 import com.itson.Interfaces.iItinerario;
 import com.itson.dominio.Guia;
 import com.itson.dominio.Zona;
+import javax.swing.JOptionPane;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -482,17 +484,33 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
         double longitud = Double.parseDouble(txtLongitud.getText());
         int maxVisitantes = Integer.parseInt(txtMaxVisitantes.getText());
 
-        
-        
-        Itinerario itinerario = new Itinerario();
+        int hora = Integer.parseInt(this.txtDuracion.getText());
+
+        if (zonas.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (hora < 0 || hora > 90) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (DiaHoras.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (maxVisitantes <= 30) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error", "Error", JOptionPane.ERROR_MESSAGE);
+        } else{
+            Itinerario itinerario = new Itinerario();
         itinerario.setDiasHora(DiaHoras);
         itinerario.setDuracion(duracion);
         itinerario.setLongitud(longitud);
         itinerario.setMaxVisitantes(maxVisitantes);
-        itinerario.setIdZonas(zonas);
+        List<ObjectId> zonasIds = new ArrayList();
+
+        for (Zona zona : zonas) {
+
+            zonasIds.add(zona.getId());
+
+        }
+        itinerario.setIdZonas(zonasIds);
 
         ItinerarioDAO.getInstancia().guardarItinerario(itinerario);
-
+        }
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
