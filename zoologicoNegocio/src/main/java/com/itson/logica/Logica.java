@@ -19,10 +19,17 @@ public class Logica {
     public static Logica obtenerInstancia() {
 
         if (instancia == null) {
-            Logica instancia = new Logica();
-            return instancia;
+            Logica inicio = new Logica();
+            return inicio;
         }
         return instancia;
+    }
+
+    private Logica() {
+    }
+
+    public void guardarHabitat(Habitat habitat){
+        LogicaDatos.obtenerInstancia().guardarHabitat(habitat);
     }
     
     public DatosHabitat recuperaDatosHabitat() {
