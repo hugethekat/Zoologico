@@ -4,7 +4,9 @@
  */
 package com.itson.Interfaces;
 
+import com.itson.dominio.Clima;
 import com.itson.dominio.Habitat;
+import com.itson.dominio.Vegetacion;
 import java.util.List;
 
 /**
@@ -20,4 +22,9 @@ public interface iHabitat {
     public void eliminarHabitat(Habitat habitat);
 
     public List<Habitat> consultarHabitat();
+
+    public List<Clima> obtenerClimas();
+
+    public List<Vegetacion> obtenerVegetaciones();
+
 }

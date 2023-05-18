@@ -12,6 +12,7 @@ import com.itson.dominio.Vegetacion;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
@@ -19,7 +20,10 @@ import javax.swing.DefaultListModel;
  */
 public class frmRegistrarHabitat extends javax.swing.JFrame {
 
-    Habitat habitat = new Habitat();
+    private Habitat habitat = new Habitat();
+    private DefaultListModel<Continente> modelContinente = new DefaultListModel<>();
+    private DefaultListModel<String> modelVegetacion = new DefaultListModel<>();
+    private DefaultListModel<String> modelClima = new DefaultListModel<>();
 
     private static frmRegistrarHabitat registrarHabitad;
 
@@ -34,19 +38,31 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
 
     private frmRegistrarHabitat() {
 
-        DefaultListModel<Continente> model = new DefaultListModel<>();
-        model = new DefaultListModel<>();
+        DefaultListModel<Continente> modelContinente = new DefaultListModel<>();
+        DefaultListModel<String> modelClima = new DefaultListModel<>();
+        DefaultListModel<String> modelVegetacion = new DefaultListModel<>();
 
-        model.addElement(Continente.AFRICA);
-        model.addElement(Continente.ASIA);
-        model.addElement(Continente.AMERICA);
-        model.addElement(Continente.ANTARTIDA);
-        model.addElement(Continente.EUROPA);
-        model.addElement(Continente.OCEANIA);
+        
+        modelContinente.addElement(Continente.AFRICA);
+        modelContinente.addElement(Continente.ASIA);
+        modelContinente.addElement(Continente.AMERICA);
+        modelContinente.addElement(Continente.ANTARTIDA);
+        modelContinente.addElement(Continente.EUROPA);
+        modelContinente.addElement(Continente.OCEANIA);
+
+        for (Clima clima : HabitatDAO.getInstancia().obtenerClimas()) {
+            modelClima.addElement(clima.getNombre());
+        }
+
+        for (Vegetacion vegetacion : HabitatDAO.getInstancia().obtenerVegetaciones()) {
+            modelVegetacion.addElement(vegetacion.getNombre());
+        }
 
         initComponents();
 
-        listaContinentesSistema.setModel(model);
+        listaClimasSistema.setModel(modelClima);
+        listaVegetacionSistema.setModel(modelVegetacion);
+        listaContinentesSistema.setModel(modelContinente);
 
     }
 
@@ -187,6 +203,11 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
 
         btnEliminarVegetacion.setText("Eliminar");
         btnEliminarVegetacion.setEnabled(false);
+        btnEliminarVegetacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarVegetacionActionPerformed(evt);
+            }
+        });
 
         btnEliminarClima.setText("Eliminar");
         btnEliminarClima.setEnabled(false);
@@ -403,106 +424,219 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
 
     private void btnVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerificarActionPerformed
 
-        btnEliminarClima.setEnabled(true);
-        btnEliminarContinente.setEnabled(true);
-        btnEliminarVegetacion.setEnabled(true);
+        System.out.println(HabitatDAO.getInstancia().obtenerHabitat(txtFieldNombreHabitat.getText()));
+        Habitat habitatTemp = HabitatDAO.getInstancia().obtenerHabitat(txtFieldNombreHabitat.getText());
+        if (habitatTemp != null) {
 
-        btnAgregarClima.setEnabled(true);
-        btnAgregarContinente.setEnabled(true);
-        btnAgregarVegetacion.setEnabled(true);
+            showMessageDialog(this, "Hábitat ya existente");
 
-        txtFieldClima.setEditable(true);
-        txtFielDescripcion.setEditable(true);
-        txtFieldVegetacion.setEditable(true);
+            DefaultListModel<Continente> modelContinente = new DefaultListModel<>();
+            DefaultListModel<String> modelClima = new DefaultListModel<>();
+            DefaultListModel<String> modelVegetacion = new DefaultListModel<>();
 
-        btnGuardar.setEnabled(true);
+            System.out.println(habitatTemp.getContinentes().toString());
+
+            for (Continente continente : habitatTemp.getContinentes()) {
+                modelContinente.addElement(continente);
+            }
+
+            for (Clima clima : habitatTemp.getClimas()) {
+                modelClima.addElement(clima.getNombre());
+            }
+
+            for (Vegetacion vegetacion : habitatTemp.getVegetaciones()) {
+                modelVegetacion.addElement(vegetacion.getNombre());
+            }
+
+            listaClimasHabitat.setModel(modelClima);
+            listaVegetacionHabitat.setModel(modelVegetacion);
+            listaContinentesHabitat.setModel(modelContinente);
+            
+
+        } else {
+
+            if (txtFieldNombreHabitat.getText().isBlank()) {
+
+                showMessageDialog(this, "Porfavor ingrese un nombre de hábitat");
+
+                btnEliminarClima.setEnabled(false);
+                btnEliminarContinente.setEnabled(false);
+                btnEliminarVegetacion.setEnabled(false);
+
+                btnAgregarClima.setEnabled(false);
+                btnAgregarContinente.setEnabled(false);
+                btnAgregarVegetacion.setEnabled(false);
+
+                txtFieldClima.setEditable(false);
+                txtFielDescripcion.setEditable(false);
+                txtFieldVegetacion.setEditable(false);
+
+                btnGuardar.setEnabled(false);
+            } else {
+                btnEliminarClima.setEnabled(true);
+                btnEliminarContinente.setEnabled(true);
+                btnEliminarVegetacion.setEnabled(true);
+
+                btnAgregarClima.setEnabled(true);
+                btnAgregarContinente.setEnabled(true);
+                btnAgregarVegetacion.setEnabled(true);
+
+                txtFieldClima.setEditable(true);
+                txtFielDescripcion.setEditable(true);
+                txtFieldVegetacion.setEditable(true);
+
+                btnGuardar.setEnabled(true);
+            }
+        }
 
     }//GEN-LAST:event_btnVerificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
+        Clima clima = new Clima();
+        Vegetacion vegetacion = new Vegetacion();
+
         List<Clima> climas = new ArrayList();
         if (listaClimasHabitat.getModel().getSize() > 0) {
 
             for (int i = 0; i < listaClimasHabitat.getModel().getSize(); i++) {
-                Clima clima = new Clima();
                 clima.setNombre(listaClimasHabitat.getModel().getElementAt(i));
                 climas.add(clima);
             }
+        } else if (!txtFieldClima.getText().isBlank()) {
+
+            clima.setNombre(txtFieldClima.getText());
+            
+            if (!txtFielDescripcion.getText().isBlank()) {
+
+            clima.setDescripcion(txtFielDescripcion.getText());
+
+            climas.add(clima);
+
+        } else {
+            showMessageDialog(this, "Porfavor ingrese la descripción del clima");
+        } 
+
+        } else {
+            showMessageDialog(this, "Porfavor ingrese climas");
         }
 
-        Clima clima = new Clima();
-        clima.setNombre(txtFieldClima.getText());
-        clima.setDescripcion(txtFielDescripcion.getText());
-
-        climas.add(clima);
-
+        
         List<Vegetacion> vegetaciones = new ArrayList();
-        if (listaVegetacionHabitat.getModel().getSize() >= 1) {
+        if (listaVegetacionHabitat.getModel().getSize() > 0) {
             for (int i = 0; i < listaVegetacionHabitat.getModel().getSize(); i++) {
-                Vegetacion vegetacion = new Vegetacion();
                 vegetacion.setNombre(listaVegetacionHabitat.getModel().getElementAt(i));
                 vegetaciones.add(vegetacion);
             }
+        } else if (!txtFieldVegetacion.getText().isBlank()) {
+            vegetacion.setNombre(txtFieldVegetacion.getText());
+
+            vegetaciones.add(vegetacion);
+
+        } else {
+            showMessageDialog(this, "Porfavor ingrese vegetaciones");
         }
-
-        Vegetacion vegetacion = new Vegetacion();
-        vegetacion.setNombre(txtFieldVegetacion.getText());
-
-        vegetaciones.add(vegetacion);
 
         List<Continente> Continentes = new ArrayList();
-        for (int i = 0; i < listaContinentesHabitat.getModel().getSize(); i++) {
-            Continentes.add(listaContinentesHabitat.getModel().getElementAt(i));
-        }
+        if (listaContinentesHabitat.getModel().getSize() > 0) {
+            for (int i = 0; i < listaContinentesHabitat.getModel().getSize(); i++) {
+                Continentes.add(listaContinentesHabitat.getModel().getElementAt(i));
+            }
+        } else {
+            showMessageDialog(this, "Porfavor ingrese continentes");
 
+        }
         habitat.setClimas(climas);
         habitat.setContinentes(Continentes);
         habitat.setNombre(txtFieldNombreHabitat.getText());
         habitat.setVegetaciones(vegetaciones);
 
-        HabitatDAO.getInstancia().guardarHabitat(habitat);
+        try {
+            HabitatDAO.getInstancia().guardarHabitat(habitat);
+            showMessageDialog(this, "Hábitat registrado correctamente ^^");
+            frmInicio.obtenerInstancia().setVisible(true);
+            this.dispose();
+
+        } catch (Exception e) {
+
+        }
 
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnAgregarClimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarClimaActionPerformed
 
-        DefaultListModel<String> model1 = new DefaultListModel<>();
+        DefaultListModel<String> modelClima = (DefaultListModel<String>) listaClimasSistema.getModel();
 
-        model1.addElement(listaClimasSistema.getSelectedValue());
+        this.modelClima.addElement(listaClimasSistema.getSelectedValue());
+        modelClima.removeElement(listaClimasSistema.getSelectedValue());
 
-        listaClimasHabitat.setModel(model1);
+        listaClimasHabitat.setModel(this.modelClima);
+        listaClimasSistema.setModel(modelClima);
 
     }//GEN-LAST:event_btnAgregarClimaActionPerformed
 
     private void btnAgregarVegetacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVegetacionActionPerformed
 
-        DefaultListModel<String> model1 = new DefaultListModel<>();
+        DefaultListModel<String> modelVegetacion = (DefaultListModel<String>) listaVegetacionSistema.getModel();
 
-        model1.addElement(listaVegetacionSistema.getSelectedValue());
+        this.modelVegetacion.addElement(listaVegetacionSistema.getSelectedValue());
+        
+        modelVegetacion.removeElement(listaVegetacionSistema.getSelectedValue());
+        
 
-        listaVegetacionHabitat.setModel(model1);
+        listaVegetacionHabitat.setModel(this.modelVegetacion);
+        listaVegetacionSistema.setModel(modelVegetacion);
 
     }//GEN-LAST:event_btnAgregarVegetacionActionPerformed
 
     private void btnAgregarContinenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarContinenteActionPerformed
 
-        DefaultListModel<Continente> model1 = new DefaultListModel<>();
+        DefaultListModel<Continente> modelContinente = (DefaultListModel<Continente>) listaContinentesSistema.getModel();
 
-        model1.addElement(listaContinentesSistema.getSelectedValue());
+        this.modelContinente.addElement(listaContinentesSistema.getSelectedValue());
 
-        listaContinentesHabitat.setModel(model1);
+        modelContinente.removeElement(listaContinentesSistema.getSelectedValue());
+
+        listaContinentesHabitat.setModel(this.modelContinente);
+        listaContinentesSistema.setModel(modelContinente);
 
     }//GEN-LAST:event_btnAgregarContinenteActionPerformed
 
     private void btnEliminarClimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarClimaActionPerformed
-        // TODO add your handling code here:
+
+        DefaultListModel<String> modelClima = (DefaultListModel<String>) listaClimasSistema.getModel();
+
+        modelClima.addElement(listaClimasHabitat.getSelectedValue());
+        this.modelClima.removeElement(listaClimasHabitat.getSelectedValue());
+
+        listaClimasHabitat.setModel(this.modelClima);
+        listaClimasSistema.setModel(modelClima);
     }//GEN-LAST:event_btnEliminarClimaActionPerformed
 
     private void btnEliminarContinenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarContinenteActionPerformed
-        // TODO add your handling code here:
+
+        DefaultListModel<Continente> modelContinente = (DefaultListModel<Continente>) listaContinentesSistema.getModel();
+
+        modelContinente.addElement(listaContinentesHabitat.getSelectedValue());
+        this.modelContinente.removeElement(listaContinentesHabitat.getSelectedValue());
+
+        listaContinentesHabitat.setModel(this.modelContinente);
+        listaContinentesSistema.setModel(modelContinente);
+
     }//GEN-LAST:event_btnEliminarContinenteActionPerformed
+
+    private void btnEliminarVegetacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarVegetacionActionPerformed
+
+        DefaultListModel<String> modelVegetacion = (DefaultListModel<String>) listaVegetacionSistema.getModel();
+
+        modelVegetacion.addElement(listaVegetacionHabitat.getSelectedValue());
+        this.modelVegetacion.removeElement(listaVegetacionHabitat.getSelectedValue());
+
+        listaVegetacionHabitat.setModel(this.modelVegetacion);
+        listaVegetacionSistema.setModel(modelVegetacion);
+
+    }//GEN-LAST:event_btnEliminarVegetacionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -4,8 +4,7 @@
  */
 package com.itson.DAOs;
 
-import com.itson.dominio.Animal;
-import com.itson.dominio.Sexo;
+import com.itson.dominio.Clima;
 
 /**
  *
@@ -40,19 +39,21 @@ public class test {
 //        habitat.setVegetaciones(vegetaciones);
 //        
 //        HabitatDAO.getInstancia().eliminarHabitat(habitat);
-
-        Animal animal = new Animal();
-        animal.setEdad(4);
-        animal.setNombre("Bolt");
-        animal.setSexo(Sexo.MACHO);
-
-        AnimalDAO.getInstancia().guardarAnimal(animal);
-
-        System.out.println(AnimalDAO.getInstancia().consultarAnimales().toString());
-
-        AnimalDAO.getInstancia().eliminarAnimal(animal);
-        
-                System.out.println(AnimalDAO.getInstancia().consultarAnimales().toString());
+//
+//        Animal animal = new Animal();
+//        animal.setEdad(4);
+//        animal.setNombre("Bolt");
+//        animal.setSexo(Sexo.MACHO);
+//
+//        AnimalDAO.getInstancia().guardarAnimal(animal);
+//
+//        System.out.println(AnimalDAO.getInstancia().consultarAnimales().toString());
+//
+//        AnimalDAO.getInstancia().eliminarAnimal(animal);
+//        
+//                System.out.println(AnimalDAO.getInstancia().consultarAnimales().toString());
+//                
+                System.out.println(HabitatDAO.getInstancia().obtenerHabitat("MapacheLand").getContinentes());
 
 
     }

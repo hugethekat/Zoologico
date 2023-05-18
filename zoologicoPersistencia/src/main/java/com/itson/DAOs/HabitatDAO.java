@@ -45,7 +45,7 @@ public class HabitatDAO implements iHabitat {
         try {
             MongoCollection<Document> collection = ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getHabitats());
 
-            Document query = new Document(FormatoColecciones.getHabitats(), nombre);
+            Document query = new Document("Nombre", nombre);
             Document documentoEncontrado = collection.find(query).first();
 
             List<Clima> climas = new ArrayList<>();
@@ -85,34 +85,33 @@ public class HabitatDAO implements iHabitat {
                 List<Document> continentesDocs = documentoEncontrado.getList(FormatoColecciones.getContinentes(), Document.class);
                 if (continentesDocs != null) {
                     for (Document continenteDoc : continentesDocs) {
-                        Continente continente;
-                        // Establecer los valores de las propiedades del continente
-                        // Agregar el continente a la lista de continentes
-                        switch (continenteDoc.getString("Nombre")) {
-
-                            case ("AMERICA"):
-                                continentes.add(Continente.AMERICA);
+                        Continente continente = null;
+                        switch (continenteDoc.getString("Continente")) {
+                            case "AMERICA":
+                                continente = Continente.AMERICA;
                                 break;
-                            case ("AFRICA"):
-                                continentes.add(Continente.AFRICA);
+                            case "AFRICA":
+                                continente = Continente.AFRICA;
                                 break;
-                            case ("ANTARTIDA"):
-                                continentes.add(Continente.ANTARTIDA);
+                            case "ANTARTIDA":
+                                continente = Continente.ANTARTIDA;
                                 break;
-                            case ("ASIA"):
-                                continentes.add(Continente.ASIA);
+                            case "ASIA":
+                                continente = Continente.ASIA;
                                 break;
-                            case ("EUROPA"):
-                                continentes.add(Continente.EUROPA);
+                            case "EUROPA":
+                                continente = Continente.EUROPA;
                                 break;
-                            case ("OCEANIA"):
-                                continentes.add(Continente.OCEANIA);
+                            case "OCEANIA":
+                                continente = Continente.OCEANIA;
                                 break;
-
                         }
-
+                        if (continente != null) {
+                            continentes.add(continente);
+                        }
                     }
                 }
+
                 habitat.setContinentes(continentes);
 
                 // Obtener lista de IDs de Especies
@@ -197,7 +196,7 @@ public class HabitatDAO implements iHabitat {
     @Override
     public List<Habitat> consultarHabitat() {
 
-        List<Habitat> listaAnimales = new ArrayList();
+        List<Habitat> listaHabitats = new ArrayList();
 
         MongoCursor<Document> habitatDoc = ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getHabitats()).find().iterator();
 
@@ -205,10 +204,71 @@ public class HabitatDAO implements iHabitat {
             Document document = habitatDoc.next();
             String nombre = document.getString("Nombre");
 
-           
         }
-        return listaAnimales;
+        return listaHabitats;
 
     }
-   
+
+    @Override
+    public List<Clima> obtenerClimas() {
+
+        List<Clima> climas = new ArrayList();
+
+        Document query = new Document();
+
+        Document projection = new Document(FormatoColecciones.getClimas(), 1);
+
+        MongoCursor<Document> cursor = ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getHabitats()).find(query).projection(projection).iterator();
+
+        while (cursor.hasNext()) {
+
+            Document document = cursor.next();
+            List<Document> climaDocuments = (List<Document>) document.get(FormatoColecciones.getClimas());
+
+            for (Document climaDocument : climaDocuments) {
+
+                Clima clima = new Clima();
+                clima.setNombre(climaDocument.getString("Nombre"));
+                clima.setDescripcion(climaDocument.getString("Descripcion"));
+
+                climas.add(clima);
+            }
+
+        }
+
+        cursor.close();
+        return climas;
+    }
+
+    @Override
+    public List<Vegetacion> obtenerVegetaciones() {
+
+        List<Vegetacion> vegetaciones = new ArrayList();
+
+        Document query = new Document();
+
+        Document projection = new Document(FormatoColecciones.getVegetaciones(), 1);
+
+        MongoCursor<Document> cursor = ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getHabitats()).find(query).projection(projection).iterator();
+
+        while (cursor.hasNext()) {
+
+            Document document = cursor.next();
+            List<Document> vegetacionDocuments = (List<Document>) document.get(FormatoColecciones.getVegetaciones());
+
+            for (Document vegetacionDocument : vegetacionDocuments) {
+
+                Vegetacion vegetacion = new Vegetacion();
+                vegetacion.setNombre(vegetacionDocument.getString("Nombre"));
+
+                vegetaciones.add(vegetacion);
+            }
+
+        }
+
+        cursor.close();
+        return vegetaciones;
+
+    }
+
 }

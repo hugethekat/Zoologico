@@ -32,7 +32,7 @@ public class FormatoColecciones {
     }
 
     public static String getContinentes() {
-        return "Continente";
+        return "Continentes";
     }
 
     public static String getCuidadores() {
