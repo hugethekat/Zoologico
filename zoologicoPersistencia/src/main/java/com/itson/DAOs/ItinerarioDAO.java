@@ -136,18 +136,14 @@ public class ItinerarioDAO implements iItinerario {
             DiasHorasDoc.add(diaHoraDoc);
         }
 
-        List<Document> ZonasDoc = new ArrayList<>();
-        for (Zona zona : itinerario.getIdZonas()) {
-            Document zonaDoc = new Document("Nombre", zona.getNombre())
-                    .append("Exstencion", zona.getExtension());
-            ZonasDoc.add(zonaDoc);
-        }
-
+        List<ObjectId> idZonas = itinerario.getIdZonas();
+            itinerario.setIdZonas(idZonas);
+        
         Document itinerarioDoc = new Document("Duracion", itinerario.getDuracion())
                 .append("Longitud", itinerario.getLongitud())
                 .append("MaxVisitantes", itinerario.getMaxVisitantes())
                 .append("DiaHoras", DiasHorasDoc)
-                .append("Zonas", ZonasDoc);
+                .append("Zonas", itinerario.getIdZonas());
 
         ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getItinerarios()).deleteOne(itinerarioDoc);
     }
@@ -184,16 +180,8 @@ public class ItinerarioDAO implements iItinerario {
                     ));
 
             // Convertir la lista de objetos Document a List<Zona>
-            List<Document> zonasDocuments = (List<Document>) result.get("idZonas");
-            List<Zona> zonas = new ArrayList<>();
-            for (Document zonaDocument : zonasDocuments) {
-                Zona zona = new Zona();
-                zona.setId(zonaDocument.getObjectId("_id"));
-                zona.setNombre(zonaDocument.getString("nombre"));
-                // Asignar valores a los demás atributos de Zona...
-                zonas.add(zona);
-            }
-            itinerario.setIdZonas(zonas);
+            List<ObjectId> idZonas = result.getList("idZonas", ObjectId.class);
+            itinerario.setIdZonas(idZonas);
 
             return itinerario;
         } else {

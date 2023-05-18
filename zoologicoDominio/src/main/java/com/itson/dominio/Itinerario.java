@@ -20,7 +20,7 @@ public class Itinerario {
     private int maxVisitantes;
     private List<DiaHora> diasHora;
     private List<ObjectId> idRecorridos;
-    private List<Zona> idZonas;
+    private List<ObjectId> idZonas;
 
     public Itinerario() {
     }
@@ -49,13 +49,15 @@ public class Itinerario {
         this.idRecorridos = idRecorridos;
     }
 
-    public List<Zona> getIdZonas() {
+    public List<ObjectId> getIdZonas() {
         return idZonas;
     }
 
-    public void setIdZonas(List<Zona> idZonas) {
+    public void setIdZonas(List<ObjectId> idZonas) {
         this.idZonas = idZonas;
     }
+
+   
 
     public double getDuracion() {
         return duracion;
