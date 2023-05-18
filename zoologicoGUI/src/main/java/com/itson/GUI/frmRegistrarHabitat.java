@@ -549,16 +549,17 @@ public class frmRegistrarHabitat extends javax.swing.JFrame {
         habitat.setNombre(txtFieldNombreHabitat.getText());
         habitat.setVegetaciones(vegetaciones);
 
-        try {
-            HabitatDAO.getInstancia().guardarHabitat(habitat);
-            showMessageDialog(this, "Hábitat registrado correctamente ^^");
-            frmInicio.obtenerInstancia().setVisible(true);
-            this.dispose();
+        if (!habitat.getClimas().isEmpty()&&!habitat.getContinentes().isEmpty()&&!habitat.getNombre().isBlank()&&!habitat.getVegetaciones().isEmpty()) {
+            try {
+                HabitatDAO.getInstancia().guardarHabitat(habitat);
+                showMessageDialog(this, "Hábitat registrado correctamente ^^");
+                frmInicio.obtenerInstancia().setVisible(true);
+                this.dispose();
 
-        } catch (Exception e) {
+            } catch (Exception e) {
 
+            }
         }
-
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
