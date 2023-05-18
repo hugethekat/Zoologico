@@ -427,8 +427,6 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
         listaZonas.setEnabled(true);
         listaZonasElegir.setEnabled(true);
         listGuias.setEnabled(true);
-
-
     }//GEN-LAST:event_btnVerificarActionPerformed
 
     private void txtDuracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDuracionActionPerformed
@@ -484,6 +482,8 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
         double longitud = Double.parseDouble(txtLongitud.getText());
         int maxVisitantes = Integer.parseInt(txtMaxVisitantes.getText());
 
+        
+        
         Itinerario itinerario = new Itinerario();
         itinerario.setDiasHora(DiaHoras);
         itinerario.setDuracion(duracion);

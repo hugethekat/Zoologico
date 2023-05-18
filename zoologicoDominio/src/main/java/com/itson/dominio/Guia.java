@@ -25,4 +25,11 @@ public class Guia extends Empleado{
     public void setIdRecorridos(List<ObjectId> idRecorridos) {
         this.idRecorridos = idRecorridos;
     }   
+
+    @Override
+    public String toString() {
+        return getNombre();
+    }
+    
+    
 }

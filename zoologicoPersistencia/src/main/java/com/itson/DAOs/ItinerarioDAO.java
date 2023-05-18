@@ -16,9 +16,12 @@ import com.itson.dominio.Sexo;
 import com.itson.utils.FormatoColecciones;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 /**
@@ -38,28 +41,76 @@ public class ItinerarioDAO implements iItinerario {
 
     @Override
     public void guardarItinerario(Itinerario itinerario) {
-        List<Document> DiasHorasDoc = new ArrayList<>();
+//        List<Document> DiasHorasDoc = new ArrayList<>();
+//
+//        for (DiaHora diahora : itinerario.getDiasHora()) {
+//            Document diaHoraDoc = new Document("Hora", diahora.getHora())
+//                    .append("Dia", diahora.getDia().toString());
+//            DiasHorasDoc.add(diaHoraDoc);
+//        }
+//
+//        List<Document> ZonasDoc = new ArrayList<>();
+//        for (Zona zona : itinerario.getIdZonas()) {
+//            Document zonaDoc = new Document("Nombre", zona.getNombre())
+//                    .append("Exstencion", zona.getExtension());
+//            ZonasDoc.add(zonaDoc);
+//        }
+//
+//        Document itinerarioDoc = new Document("Duracion", itinerario.getDuracion())
+//                .append("Longitud", itinerario.getLongitud())
+//                .append("MaxVisitantes", itinerario.getMaxVisitantes())
+//                .append("DiaHoras", DiasHorasDoc)
+//                .append("Zonas", ZonasDoc);
+//
+//        ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getItinerarios()).insertOne(itinerarioDoc);
 
-        for (DiaHora diahora : itinerario.getDiasHora()) {
-            Document diaHoraDoc = new Document("Hora", diahora.getHora())
-                    .append("Dia", diahora.getDia().toString());
-            DiasHorasDoc.add(diaHoraDoc);
+        MongoCollection<Document> itinerariosCollection = ConexionDB.obtenerInstancia().getCollection("itinerarios");
+
+        Document itinerarioDocument = new Document();
+        itinerarioDocument.append("nombre", itinerario.getNombre());
+        itinerarioDocument.append("duracion", itinerario.getDuracion());
+        itinerarioDocument.append("longitud", itinerario.getLongitud());
+        itinerarioDocument.append("maxVisitantes", itinerario.getMaxVisitantes());
+        itinerarioDocument.append("diasHora", itinerario.getDiasHora());
+        itinerarioDocument.append("Zonas", itinerario.getIdZonas());
+
+        // Insertar el itinerario sin las IDs de los recorridos
+        itinerariosCollection.insertOne(itinerarioDocument);
+
+        ObjectId itinerarioId = itinerarioDocument.getObjectId("_id");
+
+        List<ObjectId> idRecorridos = new ArrayList<>();
+
+        MongoCollection<Document> recorridosCollection = ConexionDB.obtenerInstancia().getCollection("recorridos");
+
+        for (DiaHora diaHora : itinerario.getDiasHora()) {
+            Recorrido recorrido = new Recorrido();
+            recorrido.setDuracion(itinerario.getDuracion());
+            recorrido.setLongitud(itinerario.getLongitud());
+            recorrido.setNumVisitantes(itinerario.getMaxVisitantes());
+            //recorrido.setFechaHora(diaHora.getFechaHora());
+            recorrido.setQuejas(new ArrayList<>()); // Agrega lógica para las quejas si es necesario
+            recorrido.setIdGuia(new ObjectId()); // Asigna el ObjectId del guía correspondiente
+            recorrido.setIdItinerario(itinerarioId);
+
+            Document recorridoDocument = new Document();
+            recorridoDocument.put("duracion", recorrido.getDuracion());
+            recorridoDocument.put("longitud", recorrido.getLongitud());
+            recorridoDocument.put("numVisitantes", recorrido.getNumVisitantes());
+            recorridoDocument.put("fechaHora", recorrido.getFechaHora());
+            //recorridoDocument.put("idGuia", recorrido.getIdGuia());
+            recorridoDocument.put("idItinerario", recorrido.getIdItinerario());
+
+            recorridosCollection.insertOne(recorridoDocument);
+
+            ObjectId recorridoId = recorridoDocument.getObjectId("_id");
+            idRecorridos.add(recorridoId);
         }
 
-        List<Document> ZonasDoc = new ArrayList<>();
-        for (Zona zona : itinerario.getIdZonas()) {
-            Document zonaDoc = new Document("Nombre", zona.getNombre())
-                    .append("Exstencion", zona.getExtension());
-            ZonasDoc.add(zonaDoc);
-        }
-
-        Document itinerarioDoc = new Document("Duracion", itinerario.getDuracion())
-                .append("Longitud", itinerario.getLongitud())
-                .append("MaxVisitantes", itinerario.getMaxVisitantes())
-                .append("DiaHoras", DiasHorasDoc)
-                .append("Zonas", ZonasDoc);
-
-        ConexionDB.obtenerInstancia().getCollection(FormatoColecciones.getItinerarios()).insertOne(itinerarioDoc);
+        // Actualizar el itinerario con las IDs de los recorridos
+        Bson filter = Filters.eq("_id", itinerarioId);
+        Bson update = Updates.set("idRecorridos", idRecorridos);
+        itinerariosCollection.updateOne(filter, update);
     }
 
     @Override
@@ -114,7 +165,9 @@ public class ItinerarioDAO implements iItinerario {
             itinerario.setDiasHora(diasHora);
 
             // Obtener la lista de ObjectId directamente
-            itinerario.setIdRecorridos(result.getList("idRecorridos", ObjectId.class));
+            itinerario
+                    .setIdRecorridos(result.getList("idRecorridos", ObjectId.class
+                    ));
 
             // Convertir la lista de objetos Document a List<Zona>
             List<Document> zonasDocuments = (List<Document>) result.get("idZonas");
