@@ -12,20 +12,18 @@ import java.util.List;
  */
 public class DatosItinerario {
 
-    private Guia guia;
+    private List <Guia> guias;
     private List<Zona> zonas;
 
     public DatosItinerario() {
     }
 
-
-
-    public Guia getGuia() {
-        return guia;
+    public List<Guia> getGuias() {
+        return guias;
     }
 
-    public void setGuia(Guia guia) {
-        this.guia = guia;
+    public void setGuias(List<Guia> guias) {
+        this.guias = guias;
     }
 
     public List<Zona> getZonas() {
