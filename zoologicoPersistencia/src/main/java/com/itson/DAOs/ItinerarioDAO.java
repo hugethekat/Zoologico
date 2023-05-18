@@ -98,7 +98,7 @@ public class ItinerarioDAO implements iItinerario {
             recorrido.setNumVisitantes(itinerario.getMaxVisitantes());
 //Obtiene un guía aleatorio para asignarle un recorrido
             List<Guia> guias = GuiaDAO.getInstancia().consultarGuia();
-            Guia guia = guias.get((int) (Math.random() * ((guias.size() - 0) + 1)));
+            Guia guia = guias.get((int) (Math.random() * ((guias.size() - 0))));
 
             recorrido.setIdGuia(guia.getId());
 
