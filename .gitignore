@@ -1,2 +1,17 @@
-/zoologicoPersistencia/target/
-/zoologicoDominio/target/
+
+# Netbeans
+/nbproject/private/
+/nbproject/Makefile-.mk
+ **/nbproject/Package-.bash
+/nbproject/build-impl.xml
+/nbproject/genfiles.properties
+/nbproject/project.properties
+/nbactions.xml
+**/target/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+nb-configuration.xml 
+git add .gitignore

@@ -4,7 +4,19 @@
  */
 package com.itson.DAOs;
 
+
 import com.itson.dominio.Clima;
+import com.itson.dominio.Animal;
+import com.itson.dominio.DiaHora;
+import com.itson.dominio.Dias;
+import com.itson.dominio.Itinerario;
+import com.itson.dominio.Sexo;
+import com.itson.dominio.Zona;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import com.itson.dominio.Zona;
 
 /**
  *
@@ -39,7 +51,7 @@ public class test {
 //        habitat.setVegetaciones(vegetaciones);
 //        
 //        HabitatDAO.getInstancia().eliminarHabitat(habitat);
-//
+
 //        Animal animal = new Animal();
 //        animal.setEdad(4);
 //        animal.setNombre("Bolt");
@@ -50,11 +62,40 @@ public class test {
 //        System.out.println(AnimalDAO.getInstancia().consultarAnimales().toString());
 //
 //        AnimalDAO.getInstancia().eliminarAnimal(animal);
+
 //        
 //                System.out.println(AnimalDAO.getInstancia().consultarAnimales().toString());
 //                
                 System.out.println(HabitatDAO.getInstancia().obtenerHabitat("MapacheLand").getContinentes());
 
+//
+//        System.out.println(AnimalDAO.getInstancia().consultarAnimales().toString());
+
+//        Itinerario itinerario = new Itinerario();
+//        itinerario.setDuracion(500);
+//        itinerario.setLongitud(7524);
+//        itinerario.setMaxVisitantes(20);
+//
+//        List<DiaHora> DiasHoras = new ArrayList<>();
+//        DiaHora diaHora = new DiaHora();
+//        diaHora.setDia(Dias.LUNES);
+//
+//        List<String> horas = new ArrayList<>();
+//        horas.add("12:00");
+//        horas.add("1:00");
+//        diaHora.setHora(horas);
+//        itinerario.setDiasHora(DiasHoras);
+//        
+//         List<Zona> zonas = new ArrayList<>();
+
+
+         ZonaDAO zonaDAO = new ZonaDAO();
+         Zona zona = new Zona();
+         zona.setExtension(100);
+         zona.setNombre("Mamiferos");
+         
+        ZonaDAO.getInstancia().guardarZona(zona);
+        System.out.println(ZonaDAO.getInstancia().consultarZona().toString());
 
     }
 
