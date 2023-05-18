@@ -98,8 +98,13 @@ public class LogicaDatos {
         zona1.setExtension(341);
         zona1.setIdItinerarios(itinerariosId);
         zona1.setNombre("Marino");
-        
-        
+
+        ZonaDAO.getInstancia().guardarZona(zona1);
+        ZonaDAO.getInstancia().guardarZona(zona2);
+        ZonaDAO.getInstancia().guardarZona(zona3);
+        ZonaDAO.getInstancia().guardarZona(zona4);
+        ZonaDAO.getInstancia().guardarZona(zona5);
+
     }
 
 //    public void guardarQueja(){

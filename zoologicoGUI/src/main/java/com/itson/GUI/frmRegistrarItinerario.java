@@ -381,11 +381,11 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
                     .addComponent(btnEliminarZona)
                     .addComponent(btnEliminarGuia)
                     .addComponent(btnAgregarZona))
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegresar)
-                    .addComponent(btnGuardar))
-                .addGap(35, 35, 35))
+                    .addComponent(btnGuardar)
+                    .addComponent(btnRegresar))
+                .addGap(52, 52, 52))
         );
 
         pack();
@@ -489,8 +489,7 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
         modelDH.addElement(diaHora);
 
         listDiasSemana.setModel(modelDH);
-        comboDia.setEnabled(false);
-
+        
     }//GEN-LAST:event_btnAgregarDiaHoraActionPerformed
 
     private void btnEliminarGuiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarGuiaActionPerformed
@@ -521,19 +520,20 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
         int hora = Integer.parseInt(this.txtDuracion.getText());
 
         if (zonas.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No escogió ninguna zona", "Error", JOptionPane.ERROR_MESSAGE);
         } else if (hora < 0 || hora > 90) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Tiempo inválido (max 90m, min 1)", "Error", JOptionPane.ERROR_MESSAGE);
         } else if (DiaHoras.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (maxVisitantes <= 30) {
-            JOptionPane.showMessageDialog(null, "Ocurrió un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Fecha vacia", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (maxVisitantes >= 30) {
+            JOptionPane.showMessageDialog(null, "Máximo de visitantes demasiado grande (max 30)", "Error", JOptionPane.ERROR_MESSAGE);
         } else{
             Itinerario itinerario = new Itinerario();
         itinerario.setDiasHora(DiaHoras);
         itinerario.setDuracion(duracion);
         itinerario.setLongitud(longitud);
         itinerario.setMaxVisitantes(maxVisitantes);
+        itinerario.setNombre(txtNomItinerario.getText());
         List<ObjectId> zonasIds = new ArrayList();
 
         for (Zona zona : zonas) {
@@ -541,9 +541,12 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
             zonasIds.add(zona.getId());
 
         }
+        
         itinerario.setIdZonas(zonasIds);
 
         Logica.obtenerInstancia().guardarItinerario(itinerario);
+        
+            showMessageDialog(this, "Registro satisfactorio");
         
         }
 
