@@ -4,7 +4,6 @@
  */
 package com.itson.dominio;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ public class DiaHora {
     
     
     private Dias dia;
-    private List<String> hora;
+    private String hora;
 
     public DiaHora() {
     }
@@ -28,12 +27,17 @@ public class DiaHora {
         this.dia = dia;
     }
 
-    public List<String> getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(List<String> hora) {
+    public void setHora(String hora) {
         this.hora = hora;
+    }
+
+    @Override
+    public String toString() {
+        return  dia + " " +  hora;
     }
 
 

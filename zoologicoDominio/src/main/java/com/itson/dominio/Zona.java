@@ -61,6 +61,11 @@ public class Zona {
     public void setExtension(double extension) {
         this.extension = extension;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
  
     
     
