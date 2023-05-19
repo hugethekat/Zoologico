@@ -4,12 +4,15 @@
  */
 package com.itson.logica;
 
+import com.itson.DAOs.ItinerarioDAO;
 import com.itson.control.ControlHabitat;
 import com.itson.control.ControlItinerarios;
 import com.itson.dominio.DatosHabitat;
 import com.itson.dominio.DatosItinerario;
 import com.itson.dominio.Habitat;
 import com.itson.dominio.Itinerario;
+import com.itson.dominio.Queja;
+import java.util.List;
 
 /**
  *
@@ -31,6 +34,10 @@ public class Logica {
     private Logica() {
     }
 
+    public List <Itinerario> recuperaItinerario(){
+        return LogicaDatos.obtenerInstancia().recuperaItinerario();
+    }
+    
     public void guardarItinerario(Itinerario itinerario) {
         ControlItinerarios.obtenerInstancia().guardarItinerario(itinerario);
     }
@@ -55,6 +62,8 @@ public class Logica {
         return ControlHabitat.obtenerInstancia().buscaHabitat(nombre);
     }
     
-    
+    public void guardarQueja(Queja queja){
+        LogicaDatos.obtenerInstancia().guardarQueja(queja);
+    }
     
 }

@@ -22,7 +22,7 @@ public class frmInicio extends javax.swing.JFrame {
     }
 
     /**
-     * Creates new form frmRegistrarQuejas
+     * Creates new form frmRegistrarQuejas 
      */
     private frmInicio() {
         initComponents();
@@ -57,6 +57,7 @@ public class frmInicio extends javax.swing.JFrame {
         });
 
         btnEspecie.setText("Registrar/Editar especie");
+        btnEspecie.setEnabled(false);
         btnEspecie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEspecieActionPerformed(evt);

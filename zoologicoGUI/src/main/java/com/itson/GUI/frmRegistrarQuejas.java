@@ -4,18 +4,13 @@
  */
 package com.itson.GUI;
 
-import com.itson.DAOs.GuiaDAO;
-import com.itson.DAOs.ItinerarioDAO;
-import com.itson.DAOs.QuejaDAO;
 import com.itson.dominio.Dias;
-import com.itson.dominio.Guia;
 import com.itson.dominio.Itinerario;
 import com.itson.dominio.Queja;
-import com.itson.dominio.Zona;
+import com.itson.logica.Logica;
 import java.util.List;
 import java.util.regex.Pattern;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
@@ -48,7 +43,7 @@ public class frmRegistrarQuejas extends javax.swing.JFrame {
         DefaultListModel<Itinerario> modelIT = new DefaultListModel<>();
         //DefaultListModel<Hora> modelHoras = new DefaultListModel<>();
         DefaultListModel<Dias> modelIDias = new DefaultListModel<>();
-        List<Itinerario> itinerarios = ItinerarioDAO.getInstancia().obtenerItinerarios();
+        List<Itinerario> itinerarios = Logica.obtenerInstancia().recuperaItinerario();
 
         for (Itinerario tilin : itinerarios) {
             modelIT.addElement(tilin);
@@ -356,7 +351,7 @@ public class frmRegistrarQuejas extends javax.swing.JFrame {
                 queja.setTelefono(telefono);
                 queja.setRecorrido(null);
 
-                QuejaDAO.getInstancia().guardarQueja(queja);
+                Logica.obtenerInstancia().guardarQueja(queja);
                 this.limpiaCampos();
                 showMessageDialog(this, "Queja Envianda");
             } else {

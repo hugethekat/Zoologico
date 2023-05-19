@@ -454,7 +454,6 @@ public class frmRegistrarItinerario extends javax.swing.JFrame {
             txtDuracion.setEditable(false);
             txtLongitud.setEditable(false);
             txtMaxVisitantes.setEditable(false);
-            txtNomItinerario.setEditable(false);
 
             comboDia.setEnabled(false);
             comboHora.setEnabled(false);

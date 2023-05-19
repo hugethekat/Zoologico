@@ -4,7 +4,6 @@
  */
 package com.itson.GUI;
 
-import com.itson.DAOs.HabitatDAO;
 import com.itson.dominio.Clima;
 import com.itson.dominio.Continente;
 import com.itson.dominio.Habitat;

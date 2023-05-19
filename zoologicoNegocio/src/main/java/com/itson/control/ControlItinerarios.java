@@ -28,24 +28,19 @@ public class ControlItinerarios {
 
     private ControlItinerarios() {
     }
-    
-    public void guardarItinerario(Itinerario itinerario){
+
+    public void guardarItinerario(Itinerario itinerario) {
         LogicaDatos.obtenerInstancia().guardarItinerario(itinerario);
     }
 
-    public Itinerario buscaItinerario(String nombre){
+    public Itinerario buscaItinerario(String nombre) {
         return LogicaDatos.obtenerInstancia().buscaItinerario(nombre);
     }
-    
+
     public DatosItinerario recuperaDatosItinerario() {
 
-        DatosItinerario datosItinerario = new DatosItinerario();
-        datosItinerario.setGuias(LogicaDatos.obtenerInstancia().obtenerGuias());
-        datosItinerario.setZonas(LogicaDatos.obtenerInstancia().obtenerZonas());
-
-        return datosItinerario;
+        return LogicaDatos.obtenerInstancia().recuperaDatosItinerario();
 
     }
-
 
 }
